@@ -418,7 +418,14 @@
     if(msg.includes('payment')) return 'We accept cash, credit/debit cards, UPI, and net banking.';
     if(msg.includes('offer') || msg.includes('discount')) return 'Check our Shop section for ongoing offers and discounts.';
     // Products
-    if(msg.includes('product') || msg.includes('food') || msg.includes('shop') || msg.includes('available')) return 'We sell pet food, toys, beds, accessories, and more for dogs, cats, birds, rabbits, and small pets. Ask about a specific product for details.';
+    if((msg.includes('product') || msg.includes('food') || msg.includes('shop') || msg.includes('available')) && !msg.includes('price') && !msg.includes('cost')) {
+      if(msg.includes('dog')) return 'We have a variety of dog food including dry, wet, and treats from top brands. Would you like recommendations for your dog’s age or breed?';
+      if(msg.includes('cat')) return 'We offer premium cat food, both dry and wet, for kittens and adults. Would you like to know about grain-free or special diet options?';
+      if(msg.includes('bird')) return 'We stock bird food for parrots, budgies, and more. Ask for details on specific bird food.';
+      if(msg.includes('rabbit')) return 'We have organic rabbit food and treats. Would you like to know about ingredients or feeding tips?';
+      if(msg.includes('small pet') || msg.includes('hamster') || msg.includes('guinea pig')) return 'We offer food and treats for hamsters, guinea pigs, and other small pets.';
+      return 'We have pet food for dogs, cats, birds, rabbits, and small pets. Please specify your pet type or ask for recommendations!';
+    }
     if(msg.includes('brand')) return 'We carry top brands like Pedigree, Whiskas, Royal Canin, Drools, and more.';
     if(msg.includes('organic') || msg.includes('natural')) return 'Yes, we have organic and natural pet products. Please specify your pet type.';
     if(msg.includes('price') || msg.includes('cost')) return 'All prices are listed in Indian Rupees. Let me know which product or service you want details for!';
