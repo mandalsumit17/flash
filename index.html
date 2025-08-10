@@ -427,6 +427,15 @@
       return 'What type of pet do you have? (Dog, Cat, Bird, Rabbit, Hamster, Guinea Pig, Other) Select a pet type to see relevant products and advice.';
     }
 
+    // Direct pet type queries (fix: always respond with relevant info)
+    if(msg.trim() === 'dog' || msg.trim() === 'Dog') return 'For dogs, we offer food (dry, wet, treats), toys, grooming products, beds, and accessories. Would you like recommendations or details on a specific item?';
+    if(msg.trim() === 'cat' || msg.trim() === 'Cat') return 'For cats, we have premium food, litter, toys, scratching posts, and accessories. Need help choosing a product or want care tips?';
+    if(msg.trim() === 'bird' || msg.trim() === 'Bird') return 'For birds, we stock food, cages, toys, and health products. What type of bird do you have, or do you need advice on care?';
+    if(msg.trim() === 'rabbit' || msg.trim() === 'Rabbit') return 'For rabbits, we offer food, bedding, toys, and grooming supplies. Would you like feeding advice or product recommendations?';
+    if(msg.trim() === 'hamster' || msg.trim() === 'Hamster') return 'For hamsters, we have food, cages, bedding, and toys. Need help with care or choosing products?';
+    if(msg.trim() === 'guinea pig' || msg.trim() === 'Guinea Pig') return 'For guinea pigs, we offer food, bedding, cages, and toys. Would you like tips on care or product suggestions?';
+    if(msg.trim() === 'other' || msg.trim() === 'Other') return 'Tell me about your pet, and I’ll help you find the right products and advice!';
+
     // High-level questions
     if(msg.includes('services')) return 'We offer grooming, veterinary clinic, adoption, and pet events. Which service are you interested in?';
     if(msg.includes('grooming')) return 'Our grooming service includes baths, haircuts, nail trims, and more. Would you like to book an appointment or know about pricing?';
