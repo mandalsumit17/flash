@@ -299,6 +299,11 @@
       <img src="https://placehold.co/40x40?text=🐾" alt="Logo" style="border-radius:50%; background:#e0e7ff;" />
       Paws and Whiskers
     </div>
+    <div style="position:relative;">
+      <span id="cart-icon" style="font-size:2rem; color:#4f46e5; cursor:pointer; position:relative;">
+        🛒<span id="cart-count" style="position:absolute; top:-10px; right:-15px; background:#16a34a; color:#fff; border-radius:50%; padding:2px 8px; font-size:0.9rem; font-weight:700; min-width:24px; text-align:center;">0</span>
+      </span>
+    </div>
     <button class="navbar-toggle" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
     <div class="navbar-menu" id="navbar-menu">
       <a href="#home">Home</a>
@@ -326,39 +331,60 @@
   <!-- Product Section -->
   <section class="products" id="shop">
     <div class="product-card">
-      <img src="https://placehold.co/120x120?text=Dog+Food" alt="Dog Food" />
+      <img src="https://images.pexels.com/photos/4587991/pexels-photo-4587991.jpeg?auto=compress&w=400&q=80" alt="Natural Dog Food" />
       <h3>Natural Dog Food</h3>
       <p>Wholesome nutrition for all breeds. Grain-free, high protein.</p>
-      <div class="product-price">$24.99</div>
-      <button class="product-btn">Add to Cart</button>
+      <div class="product-price">₹799</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
     </div>
     <div class="product-card">
-      <img src="https://placehold.co/120x120?text=Cat+Food" alt="Cat Food" />
+      <img src="https://images.pexels.com/photos/4523032/pexels-photo-4523032.jpeg?auto=compress&w=400&q=80" alt="Premium Cat Food" />
       <h3>Premium Cat Food</h3>
       <p>Delicious recipes for healthy coats and happy cats.</p>
-      <div class="product-price">$19.99</div>
-      <button class="product-btn">Add to Cart</button>
+      <div class="product-price">₹599</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
     </div>
     <div class="product-card">
-      <img src="https://placehold.co/120x120?text=Rabbit+Food" alt="Rabbit Food" />
+      <img src="https://images.pexels.com/photos/161519/pet-rabbit-bunny-rabbit-pets-161519.jpeg?auto=compress&w=400&q=80" alt="Organic Rabbit Food" />
       <h3>Organic Rabbit Food</h3>
       <p>Fresh, natural ingredients for energetic bunnies.</p>
-      <div class="product-price">$14.99</div>
-      <button class="product-btn">Add to Cart</button>
+      <div class="product-price">₹399</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
     </div>
     <div class="product-card">
-      <img src="https://placehold.co/120x120?text=Pet+Bed" alt="Pet Bed" />
+      <img src="https://images.pexels.com/photos/4587977/pexels-photo-4587977.jpeg?auto=compress&w=400&q=80" alt="Cozy Pet Bed" />
       <h3>Cozy Pet Bed</h3>
       <p>Soft, durable, and machine-washable for ultimate comfort.</p>
-      <div class="product-price">$29.99</div>
-      <button class="product-btn">Add to Cart</button>
+      <div class="product-price">₹999</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
     </div>
     <div class="product-card">
-      <img src="https://placehold.co/120x120?text=Toy" alt="Pet Toy" />
+      <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&w=400&q=80" alt="Interactive Toy" />
       <h3>Interactive Toy</h3>
       <p>Keep your pets active and entertained for hours.</p>
-      <div class="product-price">$9.99</div>
-      <button class="product-btn">Add to Cart</button>
+      <div class="product-price">₹249</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://images.pexels.com/photos/4587978/pexels-photo-4587978.jpeg?auto=compress&w=400&q=80" alt="Dog Chew Bone" />
+      <h3>Dog Chew Bone</h3>
+      <p>Long-lasting chew for strong teeth and healthy gums.</p>
+      <div class="product-price">₹199</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://images.pexels.com/photos/4587980/pexels-photo-4587980.jpeg?auto=compress&w=400&q=80" alt="Cat Scratcher" />
+      <h3>Cat Scratcher</h3>
+      <p>Durable scratcher for playful and healthy cats.</p>
+      <div class="product-price">₹349</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://images.pexels.com/photos/4587981/pexels-photo-4587981.jpeg?auto=compress&w=400&q=80" alt="Bird Feeder" />
+      <h3>Bird Feeder</h3>
+      <p>Easy-to-use feeder for all types of pet birds.</p>
+      <div class="product-price">₹299</div>
+      <button class="product-btn" onclick="addToCart()">Add to Cart</button>
     </div>
   </section>
 
@@ -390,6 +416,13 @@
     // Responsive Navbar Toggle
     function toggleMenu() {
       document.getElementById('navbar-menu').classList.toggle('active');
+    }
+
+    // Simple Cart Logic
+    let cartCount = 0;
+    function addToCart() {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
     }
 
     // Rotating Pet Care Tips
