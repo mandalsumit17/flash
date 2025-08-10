@@ -11,9 +11,28 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #ffe4e6 100%);
       color: #333;
       overflow-x: hidden;
+      min-height: 100vh;
+    }
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(0.7) blur(1px);
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, rgba(167,139,250,0.2) 0%, rgba(243,232,255,0.3) 50%, rgba(255,228,230,0.2) 100%);
+      z-index: -1;
     }
     header {
       background: #a78bfa;
@@ -214,24 +233,31 @@
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Paws & Whiskers Pet Store</h1>
-    <nav>
+  <body>
+    <!-- Video Background -->
+    <video class="video-bg" autoplay muted loop playsinline>
+      <source src="yt1z.net - Puppy Love in 2 Minutes Cute Funny Puppies (1080p).mp4" type="video/mp4" />
+      <!-- Add a fallback image or message if video not supported -->
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+  <header style="background: rgba(167,139,250,0.85); color: #fff; padding: 2rem 0 1rem 0; text-align: center; position: relative; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; box-shadow: 0 2px 16px rgba(124,58,237,0.08);">
+    <h1 style="font-size:2.5rem; font-weight:900; letter-spacing:1px;">Paws & Whiskers Pet Store</h1>
+    <nav style="margin: 1rem 0;">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
-  <section class="hero">
+  <section class="hero" style="position:relative; z-index:1; margin-top:3rem;">
     <span class="emoji emoji1">🐶</span>
     <span class="emoji emoji2">🐱</span>
     <span class="emoji emoji3">🐾</span>
-    <h2>Welcome to Your Trusted Pet Store!</h2>
-    <p>Find everything your furry friends need, from food and toys to grooming and care.</p>
+    <h2 style="font-size:2rem; font-weight:800; color:#7c3aed;">Welcome to Your Trusted Pet Store!</h2>
+    <p style="font-size:1.2rem; color:#fff; background:rgba(124,58,237,0.15); display:inline-block; padding:0.5rem 1.5rem; border-radius:1rem;">Find everything your furry friends need, from food and toys to grooming and care.</p>
     <button class="cta-btn" onclick="window.location='#services'">Shop Now</button>
   </section>
-  <section class="carousel" id="services">
+  <section class="carousel" id="services" style="z-index:1;">
     <div class="carousel-card">
       <h3>Pet Food</h3>
       <p>High-quality food for dogs, cats, birds, and more.</p>
@@ -254,26 +280,26 @@
     </div>
   </section>
   <div class="carousel-dots" id="carousel-dots"></div>
-  <section class="pet-month">
+  <section class="pet-month" style="z-index:1;">
     <h2>Pet of the Month</h2>
     <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=256&h=256&facepad=2" alt="Pet of the Month" />
     <h3>Bella</h3>
     <p>Breed: Golden Retriever<br />Age: 3 years</p>
     <p>Bella is a friendly, playful companion who loves everyone. She is our featured pet this month!</p>
   </section>
-  <section class="video-section">
+  <section class="video-section" style="z-index:1;">
     <h2>Pet Care Tips</h2>
     <iframe src="https://www.youtube.com/embed/1Ne1hqOXKKI" allowfullscreen title="Pet Care Video"></iframe>
   </section>
-  <section id="about" style="text-align:center;margin:3rem 0;">
+  <section id="about" style="text-align:center;margin:3rem 0;z-index:1;">
     <h2>About Us</h2>
     <p>Paws & Whiskers is your local, family-owned pet store. We care about your pets as much as you do!</p>
   </section>
-  <section id="contact" style="text-align:center;margin:3rem 0;">
+  <section id="contact" style="text-align:center;margin:3rem 0;z-index:1;">
     <h2>Contact</h2>
     <p>Email: info@pawswhiskers.com | Phone: (555) 123-4567</p>
   </section>
-  <div class="chatbot" aria-label="Chatbot container">
+  <div class="chatbot" aria-label="Chatbot container" style="z-index:10;">
     <h3>Chatbot</h3>
     <div id="chat-box" aria-live="polite" aria-atomic="false"></div>
     <input
