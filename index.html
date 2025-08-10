@@ -19,11 +19,17 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled {
+      padding: 0.8rem 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.12);
     }
     .navbar-logo {
       display: flex;
@@ -33,23 +39,47 @@
       font-weight: 700;
       color: #4f46e5;
       letter-spacing: 1px;
+      transition: transform 0.3s ease;
+    }
+    .navbar-logo:hover {
+      transform: scale(1.05);
     }
     .navbar-menu {
       display: flex;
-      gap: 2rem;
-      font-size: 1.1rem;
+      gap: 1rem;
+      font-size: 1rem;
     }
     .navbar-menu a {
       color: #4f46e5;
       text-decoration: none;
-      font-weight: 700;
-      padding: 0.5rem 1rem;
+      font-weight: 600;
+      padding: 0.7rem 1.2rem;
       border-radius: 1rem;
-      transition: background 0.2s, color 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .navbar-menu a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(79,70,229,0.1), transparent);
+      transition: left 0.4s;
+    }
+    .navbar-menu a:hover::before {
+      left: 100%;
     }
     .navbar-menu a:hover {
       background: #e0e7ff;
-      color: #2d3748;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79,70,229,0.2);
+    }
+    .navbar-menu a.active {
+      background: #4f46e5;
+      color: white;
     }
     .navbar-toggle {
       display: none;
@@ -138,16 +168,103 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.10);
     }
     .cta-btn {
-      background: #4f46e5;
-      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       border: none;
       border-radius: 2rem;
       padding: 1rem 2.5rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn.primary {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.3);
+    }
+    .cta-btn.secondary {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(79,70,229,0.4);
+    }
+    .cta-btn.secondary:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .cta-btn:focus {
+      outline: 3px solid rgba(79,70,229,0.5);
+      outline-offset: 2px;
+    }
+    .cta-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Enhanced Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0,0,0);
+      }
+      40%, 43% {
+        transform: translate3d(0, -10px, 0);
+      }
+      70% {
+        transform: translate3d(0, -5px, 0);
+      }
+      90% {
+        transform: translate3d(0, -2px, 0);
+      }
+    }
+    .animate-bounce {
+      animation: bounce 2s infinite;
+    }
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 4px 20px rgba(79,70,229,0.3);
+      }
+      50% {
+        box-shadow: 0 4px 30px rgba(79,70,229,0.5);
+      }
+    }
+    
+    /* Improved Focus States for Accessibility */
+    *:focus {
+      outline: 2px solid #4f46e5;
+      outline-offset: 2px;
+    }
+    button:focus, a:focus, input:focus, select:focus {
+      outline: 3px solid rgba(79,70,229,0.5);
+      outline-offset: 2px;
     }
     .cta-btn:hover {
       background: #6366f1;
@@ -167,15 +284,34 @@
       box-shadow: 0 2px 12px rgba(79,70,229,0.07);
       padding: 2rem 1.5rem 1.5rem 1.5rem;
       text-align: center;
-      transition: box-shadow 0.2s, transform 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(79,70,229,0.1), transparent);
+      transition: left 0.5s;
+    }
+    .product-card:hover::before {
+      left: 100%;
     }
     .product-card:hover {
-      box-shadow: 0 6px 24px rgba(79,70,229,0.13);
-      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(79,70,229,0.15);
+      transform: translateY(-8px);
+    }
+    .product-card:focus-within {
+      outline: 3px solid rgba(79,70,229,0.5);
+      outline-offset: 2px;
     }
     .product-card img {
       width: 120px;
@@ -184,12 +320,20 @@
       border-radius: 1rem;
       margin-bottom: 1rem;
       background: #e0e7ff;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover img {
+      transform: scale(1.1);
     }
     .product-card h3 {
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
       color: #4f46e5;
+      transition: color 0.3s ease;
+    }
+    .product-card:hover h3 {
+      color: #6366f1;
     }
     .product-card p {
       font-size: 1rem;
@@ -308,9 +452,10 @@
       <a href="#home">Home</a>
       <a href="#shop">Shop</a>
       <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#tips">Pet Care Tips</a>
-  <a href="#contact">Contact</a>
+      <a href="#services">Services</a>
+      <a href="#tips">Pet Care Tips</a>
+      <a href="#contact">Contact</a>
+      <a href="#" onclick="openPetProfileModal()" style="background:#e0e7ff; color:#4f46e5;">🐾 My Pets</a>
     </div>
   </nav>
 
@@ -322,9 +467,33 @@
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Happy Pets, Happy Homes</h1>
-      <p>Discover premium pet food, accessories, and expert care tips for your furry friends.</p>
-      <a href="#shop" class="cta-btn">Shop Now</a>
+      <div class="hero-badge animate-bounce" style="display:inline-block; background:rgba(255,255,255,0.2); backdrop-filter:blur(10px); padding:0.5rem 1rem; border-radius:2rem; margin-bottom:1rem; color:white; font-size:0.9rem; font-weight:600;">
+        🤖 AI-Powered Pet Care Platform
+      </div>
+      <h1 style="animation: slideInUp 1s ease-out;">Happy Pets, Happy Homes</h1>
+      <p id="hero-description" style="animation: slideInUp 1s ease-out 0.2s both;">Discover premium pet food, accessories, and expert care tips for your furry friends.</p>
+      <div class="hero-cta-group" style="display:flex; gap:1rem; justify-content:center; margin-top:2rem; animation: slideInUp 1s ease-out 0.4s both;">
+        <a href="#shop" class="cta-btn primary" role="button" tabindex="0" aria-label="Browse our pet products">
+          🛍️ Shop Now
+        </a>
+        <button onclick="openPetProfileModal()" class="cta-btn secondary" role="button" tabindex="0" aria-label="Create your pet profile">
+          🐾 Start Pet Profile
+        </button>
+      </div>
+      <div class="hero-stats" style="display:flex; justify-content:center; gap:2rem; margin-top:2rem; animation: slideInUp 1s ease-out 0.6s both;">
+        <div class="stat-item" style="text-align:center; color:white;">
+          <div style="font-size:1.8rem; font-weight:700;">1000+</div>
+          <div style="font-size:0.9rem; opacity:0.9;">Happy Pets</div>
+        </div>
+        <div class="stat-item" style="text-align:center; color:white;">
+          <div style="font-size:1.8rem; font-weight:700;">24/7</div>
+          <div style="font-size:0.9rem; opacity:0.9;">AI Support</div>
+        </div>
+        <div class="stat-item" style="text-align:center; color:white;">
+          <div style="font-size:1.8rem; font-weight:700;">98%</div>
+          <div style="font-size:0.9rem; opacity:0.9;">Satisfaction</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -358,6 +527,63 @@
   </section>
   <!-- Product Section -->
 </body>
+<!-- Pet Profile Modal -->
+<div id="pet-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10001;">
+  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:1.5rem; padding:2rem; width:90%; max-width:700px; max-height:80vh; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+      <h2 style="color:#4f46e5; margin:0;">🐾 My Pet Dashboard</h2>
+      <span onclick="closePetProfileModal()" style="font-size:1.5rem; cursor:pointer; color:#666;">&times;</span>
+    </div>
+    
+    <!-- Tab Navigation -->
+    <div style="display:flex; margin-bottom:1.5rem; border-bottom:2px solid #e0e7ff;">
+      <button id="pets-tab" onclick="switchProfileTab('pets')" style="background:none; border:none; padding:0.8rem 1.5rem; color:#4f46e5; font-weight:700; border-bottom:2px solid #4f46e5; cursor:pointer;">
+        🐾 My Pets
+      </button>
+      <button id="health-tab" onclick="switchProfileTab('health')" style="background:none; border:none; padding:0.8rem 1.5rem; color:#666; cursor:pointer;">
+        🏥 Health Reports
+      </button>
+    </div>
+    
+    <!-- Pet Profiles Tab -->
+    <div id="pets-tab-content">
+      <div id="pet-profiles-list"></div>
+      
+      <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid #e0e7ff;">
+        <h3 style="color:#4f46e5; margin-bottom:1rem;">Add New Pet</h3>
+        <div style="display:grid; gap:1rem;">
+          <input id="pet-name" type="text" placeholder="Pet Name" style="padding:0.7rem; border:1px solid #e0e7ff; border-radius:0.5rem;">
+          <select id="pet-type" style="padding:0.7rem; border:1px solid #e0e7ff; border-radius:0.5rem;">
+            <option value="">Select Pet Type</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Hamster">Hamster</option>
+            <option value="Guinea Pig">Guinea Pig</option>
+            <option value="Fish">Fish</option>
+            <option value="Other">Other</option>
+          </select>
+          <input id="pet-age" type="number" placeholder="Age (years)" min="0" max="30" style="padding:0.7rem; border:1px solid #e0e7ff; border-radius:0.5rem;">
+          <input id="pet-breed" type="text" placeholder="Breed (optional)" style="padding:0.7rem; border:1px solid #e0e7ff; border-radius:0.5rem;">
+          <button onclick="addPetProfile()" style="background:#4f46e5; color:#fff; border:none; padding:0.7rem; border-radius:0.5rem; font-weight:700;">Add Pet</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Health Reports Tab -->
+    <div id="health-tab-content" style="display:none;">
+      <div id="health-reports-container">
+        <div style="text-align:center; color:#666; padding:2rem;">
+          <div style="font-size:3rem; margin-bottom:1rem;">📊</div>
+          <p>No health reports generated yet.</p>
+          <p style="font-size:0.9rem;">Generate your first health report by clicking the button in the Health Dashboard below the recommendations section.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Chatbot Floating Button and Modal -->
 <div id="chatbot-btn" style="position:fixed; bottom:32px; right:32px; z-index:9999;">
   <button onclick="openChatbot()" style="background:#4f46e5; color:#fff; border:none; border-radius:50%; width:64px; height:64px; box-shadow:0 2px 12px rgba(79,70,229,0.18); font-size:2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">
@@ -406,74 +632,1261 @@
     }, 600);
   }
   function getChatbotResponse(msg) {
+    // Use AI-powered chatbot if available
+    if (petShopAI) {
+      return petShopAI.getAdvancedChatbotResponse(msg);
+    }
+    
+    // Fallback to original responses
     msg = msg.toLowerCase();
     // General Store
     if(msg.includes('open') || msg.includes('timing') || msg.includes('hours')) return 'We are open from 10am to 8pm, Monday to Saturday.';
     if(msg.includes('location') || msg.includes('where')) return 'We are located at Main Street, City Center. Visit our Contact section for directions.';
     if(msg.includes('contact') || msg.includes('phone') || msg.includes('email')) return 'You can reach us at info@pawsandwhiskers.com or call (555) 123-4567.';
-    if(msg.includes('delivery')) return 'Yes, we offer home delivery for all products. Delivery charges may apply.';
-    if(msg.includes('parking')) return 'Parking is available at our store premises.';
-    if(msg.includes('online shop') || msg.includes('website')) return 'You can shop online on our website. Browse the Shop section for products.';
-    if(msg.includes('payment')) return 'We accept cash, credit/debit cards, UPI, and net banking.';
-    if(msg.includes('offer') || msg.includes('discount')) return 'Check our Shop section for ongoing offers and discounts.';
-    // Products
-    if((msg.includes('product') || msg.includes('food') || msg.includes('shop') || msg.includes('available')) && !msg.includes('price') && !msg.includes('cost')) {
-      if(msg.includes('dog')) return 'Great! Are you looking for dog food, toys, grooming products, or something else? For food, do you prefer dry, wet, or treats? Would you like recommendations based on age or breed?';
-      if(msg.includes('cat')) return 'Awesome! Are you interested in cat food, litter, toys, or accessories? For food, do you need kitten, adult, or special diet options?';
-      if(msg.includes('bird')) return 'Sure! Are you shopping for bird food, cages, toys, or health products? What type of bird do you have?';
-      if(msg.includes('rabbit')) return 'Of course! Are you looking for rabbit food, bedding, toys, or grooming supplies? Would you like advice on feeding or care?';
-      if(msg.includes('hamster') || msg.includes('guinea pig') || msg.includes('small pet')) return 'Great! Are you interested in food, cages, bedding, or toys for your small pet? Which pet do you have: hamster, guinea pig, or another?';
-    }
-    // Prices
-    if(msg.includes('price') || msg.includes('cost')) {
-      if(msg.includes('dog food')) return 'Our dog food prices range from $20 to $60 depending on the brand and type.';
-      if(msg.includes('cat food')) return 'Cat food prices vary from $15 to $50. We have options for all budgets.';
-      if(msg.includes('bird food')) return 'Bird food is priced between $10 and $30. It depends on the size and type of bird.';
-      if(msg.includes('rabbit food')) return 'Rabbit food costs around $10 to $25. We offer both fresh and packaged options.';
-      if(msg.includes('hamster food') || msg.includes('guinea pig food') || msg.includes('small pet food')) return 'Small pet food prices range from $5 to $20. It varies by brand and quantity.';
-    }
-    // Shipping
-    if(msg.includes('shipping') || msg.includes('deliver') || msg.includes('post')) {
-      return 'We offer free shipping on orders over $50. Otherwise, standard shipping rates apply.';
-    }
-    // Returns
-    if(msg.includes('return') || msg.includes('refund') || msg.includes('exchange')) {
-      return 'You can return any unopened and unused products within 30 days for a full refund or exchange.';
-    }
-    // Appointments
-    if(msg.includes('appointment') || msg.includes('book') || msg.includes('schedule')) {
-      return 'To book an appointment for grooming or veterinary services, please call us at (555) 123-4567 or visit our website.';
-    }
-    // Payments
-    if(msg.includes('pay') || msg.includes('payment methods') || msg.includes('credit card') || msg.includes('debit card')) {
-      return 'We accept all major credit and debit cards, as well as PayPal and Apple Pay.';
-    }
-    // Misc
-    if(msg.includes('loyalty') || msg.includes('member') || msg.includes('discount card')) {
-      return 'Join our loyalty program to earn points and get discounts on future purchases. Ask in-store for details.';
-    }
-    if(msg.includes('gift') || msg.includes('voucher') || msg.includes('certificate')) {
-      return 'We offer gift vouchers that can be redeemed in-store or online. Perfect for pet lovers!';
-    }
-    // Doctor/clinic availability queries
-    if(msg.match(/doctor|vet.*available|clinic.*available|available doctor|available vet|available clinic|doctor availability|vet availability|clinic availability/i)) {
-      return 'Our veterinary doctors are available Monday to Saturday, 10am to 6pm. Would you like to book an appointment, know about walk-in hours, or ask about a specific health concern?';
-    }
-    if(msg.match(/doctor|vet|clinic/i) && msg.match(/hours|timing|schedule|open|close|when/i)) {
-      return 'Our clinic is open Monday to Saturday, 10am to 6pm. Would you like to book a visit or ask about a specific service?';
-    }
-    if(msg.match(/doctor|vet|clinic/i) && msg.match(/location|where|address/i)) {
-      return 'Our veterinary clinic is located at 123 Pet Lane, City Center. Would you like directions or more details?';
-    }
-    if(msg.match(/doctor|vet|clinic/i) && msg.match(/fees|cost|price|charges/i)) {
-      return 'Clinic fees depend on the service: checkup, vaccination, or emergency care. Would you like a price list or details for a specific service?';
-    }
-    return 'I\'m sorry, I didn\'t quite understand that. Can you please rephrase or provide more details?';
-  }
-  // Menu toggle for mobile
-  function toggleMenu() {
-    const menu = document.getElementById('navbar-menu');
-    menu.classList.toggle('active');
+    if(msg.includes('hello') || msg.includes('hi')) return 'Hello! How can I assist you with your pet needs today?';
+    return 'Sorry, I did not understand. Please ask about our products, services, adoption, grooming, clinic, events, or pet care!';
   }
 </script>
+
+  <section class="products" id="shop">
+    <div class="product-card">
+      <img src="product1.webp" alt="Natural Dog Food" />
+      <h3>Natural Dog Food</h3>
+      <p>Wholesome nutrition for all breeds. Grain-free, high protein.</p>
+      <div class="product-price">₹799</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product2.webp" alt="Premium Cat Food" />
+      <h3>Premium Cat Food</h3>
+      <p>Delicious recipes for healthy coats and happy cats.</p>
+      <div class="product-price">₹599</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product4.webp" alt="Organic Rabbit Food" />
+      <h3>Organic Rabbit Food</h3>
+      <p>Fresh, natural ingredients for energetic bunnies.</p>
+      <div class="product-price">₹399</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product5.webp" alt="Cozy Pet Bed" />
+      <h3>Cozy Pet Bed</h3>
+      <p>Soft, durable, and machine-washable for ultimate comfort.</p>
+      <div class="product-price">₹999</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product6.jpg" alt="Interactive Toy" />
+      <h3>Interactive Toy</h3>
+      <p>Keep your pets active and entertained for hours.</p>
+      <div class="product-price">₹249</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product8.jpg" alt="Dog Chew Bone" />
+      <h3>Dog Chew Bone</h3>
+      <p>Long-lasting chew for strong teeth and healthy gums.</p>
+      <div class="product-price">₹199</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product9.webp" alt="Cat Scratcher" />
+      <h3>Cat Scratcher</h3>
+      <p>Durable scratcher for playful and healthy cats.</p>
+      <div class="product-price">₹349</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="product3.jpg" alt="Bird Feeder" />
+      <h3>Bird Feeder</h3>
+      <p>Easy-to-use feeder for all types of pet birds.</p>
+      <div class="product-price">₹299</div>
+      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </section>
+
+  <!-- Pet Care Tips Section -->
+  <section class="tips-section" id="tips">
+    <div class="tips-title">Pet Care Tips</div>
+    <div class="tip" id="tip-text">Feed your pet a balanced diet for optimal health.</div>
+    <a class="tip-link" id="tip-link" href="https://www.youtube.com/watch?v=1Ne1hqOXKKI" target="_blank">Watch on YouTube</a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" style="padding:3rem 2rem; background:#f7f8fa; margin:2rem 0;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h2 style="text-align:center; color:#4f46e5; margin-bottom:2rem; font-size:2.5rem;">About Paws and Whiskers</h2>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-bottom:3rem;">
+        <div style="background:white; padding:2rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="color:#4f46e5; margin-bottom:1rem;">🏪 Our Story</h3>
+          <p style="color:#666; line-height:1.6;">
+            Founded in 2020, Paws and Whiskers began as a family-owned pet store with a simple mission: to provide the best care and products for every pet. Today, we've evolved into an AI-powered pet care platform, combining traditional pet expertise with cutting-edge technology to serve thousands of happy pets and their families.
+          </p>
+        </div>
+        
+        <div style="background:white; padding:2rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="color:#4f46e5; margin-bottom:1rem;">🤖 AI-Powered Innovation</h3>
+          <p style="color:#666; line-height:1.6;">
+            We're pioneers in AI-driven pet care, offering personalized recommendations, health risk prediction, visual product search, and intelligent pricing. Our advanced chatbot provides 24/7 assistance, while our machine learning algorithms ensure every pet gets exactly what they need.
+          </p>
+        </div>
+        
+        <div style="background:white; padding:2rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+          <h3 style="color:#4f46e5; margin-bottom:1rem;">🏥 Comprehensive Services</h3>
+          <p style="color:#666; line-height:1.6;">
+            Beyond products, we offer professional grooming, veterinary consultations, pet adoption services, and training workshops. Our certified groomers and experienced veterinarians ensure your pets receive the highest standard of care.
+          </p>
+        </div>
+      </div>
+      
+      <div style="background:white; padding:2rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:2rem;">
+        <h3 style="color:#4f46e5; margin-bottom:1.5rem; text-align:center;">🎯 Our Mission & Values</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;">
+          <div style="text-align:center;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">❤️</div>
+            <h4 style="color:#4f46e5; margin-bottom:0.5rem;">Pet-First Approach</h4>
+            <p style="color:#666; font-size:0.9rem;">Every decision prioritizes pet health, happiness, and well-being above all else.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">🔬</div>
+            <h4 style="color:#4f46e5; margin-bottom:0.5rem;">Scientific Excellence</h4>
+            <p style="color:#666; font-size:0.9rem;">Evidence-based care recommendations powered by veterinary science and AI research.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">🌟</div>
+            <h4 style="color:#4f46e5; margin-bottom:0.5rem;">Personalized Experience</h4>
+            <p style="color:#666; font-size:0.9rem;">AI-driven personalization ensures every pet gets customized care and product recommendations.</p>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">🤝</div>
+            <h4 style="color:#4f46e5; margin-bottom:0.5rem;">Community Impact</h4>
+            <p style="color:#666; font-size:0.9rem;">Supporting local animal shelters and promoting responsible pet ownership in our community.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align:center; background:linear-gradient(135deg, #4f46e5, #7c3aed); color:white; padding:2rem; border-radius:1rem;">
+        <h3 style="margin:0 0 1rem 0;">🚀 Join the Future of Pet Care</h3>
+        <p style="margin:0 0 1.5rem 0; opacity:0.9;">Experience the most advanced AI-powered pet care platform. From intelligent health predictions to personalized recommendations, we're revolutionizing how you care for your beloved pets.</p>
+        <button onclick="openPetProfileModal()" style="background:white; color:#4f46e5; border:none; padding:1rem 2rem; border-radius:0.5rem; font-weight:700; cursor:pointer;">
+          🐾 Start Your AI Pet Profile
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#tips">Pet Care Tips</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-contact">
+      Email: info@pawsandwhiskers.com | Phone: (555) 123-4567
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 Paws and Whiskers. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // AI/ML Enhanced Features
+    class PetShopAI {
+      constructor() {
+        this.userProfile = this.loadUserProfile();
+        this.petProfiles = this.loadPetProfiles();
+        this.userBehavior = this.loadUserBehavior();
+        this.recommendations = [];
+        this.init();
+      }
+
+      init() {
+        this.trackUserBehavior();
+        this.generateRecommendations();
+        this.personalizeContent();
+        this.initAdvancedChatbot();
+        this.initVisualSearch();
+        this.initDynamicPricing();
+        this.initHealthRiskPrediction();
+      }
+
+      // User Profile Management
+      loadUserProfile() {
+        return JSON.parse(localStorage.getItem('userProfile') || '{}');
+      }
+
+      saveUserProfile(profile) {
+        localStorage.setItem('userProfile', JSON.stringify(profile));
+        this.userProfile = profile;
+      }
+
+      // Pet Profile Management
+      loadPetProfiles() {
+        return JSON.parse(localStorage.getItem('petProfiles') || '[]');
+      }
+
+      savePetProfiles(profiles) {
+        localStorage.setItem('petProfiles', JSON.stringify(profiles));
+        this.petProfiles = profiles;
+      }
+
+      // User Behavior Analytics
+      loadUserBehavior() {
+        return JSON.parse(localStorage.getItem('userBehavior') || '{"pageViews": [], "productViews": [], "searches": [], "purchases": []}');
+      }
+
+      trackUserBehavior() {
+        // Track page views
+        this.userBehavior.pageViews.push({
+          timestamp: Date.now(),
+          page: window.location.hash || '#home',
+          sessionId: this.getSessionId()
+        });
+
+        // Track product interactions
+        document.querySelectorAll('.product-card').forEach((card, index) => {
+          card.addEventListener('click', () => {
+            this.trackProductView(index);
+          });
+        });
+
+        this.saveUserBehavior();
+      }
+
+      trackProductView(productIndex) {
+        this.userBehavior.productViews.push({
+          timestamp: Date.now(),
+          productIndex: productIndex,
+          sessionId: this.getSessionId()
+        });
+        this.saveUserBehavior();
+        this.generateRecommendations();
+      }
+
+      saveUserBehavior() {
+        localStorage.setItem('userBehavior', JSON.stringify(this.userBehavior));
+      }
+
+      getSessionId() {
+        if (!sessionStorage.getItem('sessionId')) {
+          sessionStorage.setItem('sessionId', Date.now().toString());
+        }
+        return sessionStorage.getItem('sessionId');
+      }
+
+      // AI-Powered Recommendation Engine
+      generateRecommendations() {
+        const products = this.getProductData();
+        const viewedProducts = this.userBehavior.productViews.map(v => v.productIndex);
+        const petTypes = this.petProfiles.map(p => p.type.toLowerCase());
+        
+        this.recommendations = this.collaborativeFiltering(products, viewedProducts, petTypes);
+        this.displayRecommendations();
+      }
+
+      collaborativeFiltering(products, viewedProducts, petTypes) {
+        // Simple collaborative filtering algorithm
+        const scores = products.map((product, index) => {
+          let score = 0;
+          
+          // Boost score for pet-specific products
+          petTypes.forEach(petType => {
+            if (product.name.toLowerCase().includes(petType) || 
+                product.description.toLowerCase().includes(petType)) {
+              score += 10;
+            }
+          });
+          
+          // Reduce score for already viewed products
+          if (viewedProducts.includes(index)) {
+            score -= 5;
+          }
+          
+          // Boost popular products
+          score += Math.random() * 5;
+          
+          return { index, score, product };
+        });
+        
+        return scores.sort((a, b) => b.score - a.score).slice(0, 4);
+      }
+
+      getProductData() {
+        return [
+          { name: "Natural Dog Food", description: "Wholesome nutrition for all breeds. Grain-free, high protein.", price: 799, category: "dog" },
+          { name: "Premium Cat Food", description: "Delicious recipes for healthy coats and happy cats.", price: 599, category: "cat" },
+          { name: "Organic Rabbit Food", description: "Fresh, natural ingredients for energetic bunnies.", price: 399, category: "rabbit" },
+          { name: "Cozy Pet Bed", description: "Soft, durable, and machine-washable for ultimate comfort.", price: 999, category: "all" },
+          { name: "Interactive Toy", description: "Keep your pets active and entertained for hours.", price: 249, category: "all" },
+          { name: "Dog Chew Bone", description: "Long-lasting chew for strong teeth and healthy gums.", price: 199, category: "dog" },
+          { name: "Cat Scratcher", description: "Durable scratcher for playful and healthy cats.", price: 349, category: "cat" },
+          { name: "Bird Feeder", description: "Easy-to-use feeder for all types of pet birds.", price: 299, category: "bird" }
+        ];
+      }
+
+      displayRecommendations() {
+        if (this.recommendations.length === 0) return;
+        
+        // Create recommendations section if it doesn't exist
+        let recSection = document.getElementById('ai-recommendations');
+        if (!recSection) {
+          recSection = document.createElement('section');
+          recSection.id = 'ai-recommendations';
+          recSection.className = 'tips-section';
+          recSection.style.marginTop = '2rem';
+          recSection.innerHTML = `
+            <div class="tips-title">🤖 AI-Powered Recommendations For You</div>
+            <div id="recommendation-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+          `;
+          document.querySelector('#tips').insertAdjacentElement('beforebegin', recSection);
+        }
+        
+        const content = document.getElementById('recommendation-content');
+        content.innerHTML = this.recommendations.map(rec => `
+          <div style="background: #fff; border-radius: 1rem; padding: 1rem; box-shadow: 0 2px 8px rgba(79,70,229,0.07); text-align: center;">
+            <h4 style="color: #4f46e5; margin: 0 0 0.5rem 0; font-size: 1rem;">${rec.product.name}</h4>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.9rem; color: #666;">${rec.product.description.substring(0, 50)}...</p>
+            <div style="color: #16a34a; font-weight: 700;">₹${rec.product.price}</div>
+            <button onclick="petShopAI.addRecommendedToCart(${rec.index})" style="background: #4f46e5; color: #fff; border: none; border-radius: 0.5rem; padding: 0.5rem 1rem; margin-top: 0.5rem; font-size: 0.9rem; cursor: pointer;">Add to Cart</button>
+          </div>
+        `).join('');
+      }
+
+      addRecommendedToCart(productIndex) {
+        addToCart();
+        this.trackPurchase(productIndex);
+        this.showNotification('Item added to cart! 🛒');
+      }
+
+      trackPurchase(productIndex) {
+        this.userBehavior.purchases.push({
+          timestamp: Date.now(),
+          productIndex: productIndex,
+          sessionId: this.getSessionId()
+        });
+        this.saveUserBehavior();
+        this.generateRecommendations();
+      }
+
+      showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed; top: 20px; right: 20px; z-index: 10001;
+          background: #4f46e5; color: white; padding: 1rem 1.5rem;
+          border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+          animation: slideIn 0.3s ease-out;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease-out';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Content Personalization
+      personalizeContent() {
+        if (this.petProfiles.length > 0) {
+          this.personalizeHeroContent();
+          this.personalizeTips();
+        }
+      }
+
+      personalizeHeroContent() {
+        const petTypes = [...new Set(this.petProfiles.map(p => p.type))];
+        const heroText = document.querySelector('.hero-content p');
+        if (heroText && petTypes.length > 0) {
+          heroText.textContent = `Discover premium ${petTypes.join(' & ').toLowerCase()} products, accessories, and expert care tips for your beloved pets.`;
+        }
+      }
+
+      personalizeTips() {
+        const petSpecificTips = {
+          dog: [
+            { text: "Dogs need daily exercise for physical and mental health.", link: "https://www.youtube.com/watch?v=1Ne1hqOXKKI" },
+            { text: "Regular dental care prevents bad breath and tooth decay.", link: "https://www.youtube.com/watch?v=JQ9QF9AWj6g" }
+          ],
+          cat: [
+            { text: "Cats require vertical spaces and scratching posts.", link: "https://www.youtube.com/watch?v=5bYv6l1zGqA" },
+            { text: "Indoor cats need stimulating toys and window perches.", link: "https://www.youtube.com/watch?v=QwQpGzKjFqA" }
+          ],
+          bird: [
+            { text: "Birds need social interaction and mental stimulation daily.", link: "https://www.youtube.com/watch?v=3Q8zTVlD7yY" },
+            { text: "Fresh fruits and vegetables are essential for bird health.", link: "https://www.youtube.com/watch?v=1Ne1hqOXKKI" }
+          ]
+        };
+
+        const petTypes = this.petProfiles.map(p => p.type.toLowerCase());
+        let personalizedTips = [];
+        
+        petTypes.forEach(type => {
+          if (petSpecificTips[type]) {
+            personalizedTips = personalizedTips.concat(petSpecificTips[type]);
+          }
+        });
+
+        if (personalizedTips.length > 0) {
+          // Replace the global tips array with personalized tips
+          window.tips = personalizedTips;
+        }
+      }
+
+      // Advanced AI Chatbot
+      initAdvancedChatbot() {
+        this.chatHistory = [];
+        this.userContext = {
+          currentTopic: null,
+          petProfiles: this.petProfiles,
+          recentProducts: this.userBehavior.productViews.slice(-5)
+        };
+      }
+
+      getAdvancedChatbotResponse(userMessage) {
+        this.chatHistory.push({ role: 'user', message: userMessage, timestamp: Date.now() });
+        
+        // Enhanced NLP processing
+        const response = this.processNLPQuery(userMessage);
+        
+        this.chatHistory.push({ role: 'bot', message: response, timestamp: Date.now() });
+        return response;
+      }
+
+      processNLPQuery(message) {
+        const msg = message.toLowerCase();
+        const context = this.userContext;
+        
+        // Intent recognition with confidence scoring
+        const intents = [
+          { intent: 'product_recommendation', keywords: ['recommend', 'suggest', 'best', 'good', 'need'], confidence: 0 },
+          { intent: 'pet_health', keywords: ['sick', 'health', 'symptoms', 'vet', 'medicine'], confidence: 0 },
+          { intent: 'pet_profile', keywords: ['my pet', 'age', 'breed', 'weight', 'profile'], confidence: 0 },
+          { intent: 'order_status', keywords: ['order', 'delivery', 'tracking', 'shipped'], confidence: 0 },
+          { intent: 'appointment', keywords: ['appointment', 'book', 'schedule', 'grooming', 'vet'], confidence: 0 }
+        ];
+
+        // Calculate confidence scores
+        intents.forEach(intent => {
+          intent.confidence = intent.keywords.reduce((score, keyword) => {
+            return score + (msg.includes(keyword) ? 1 : 0);
+          }, 0) / intent.keywords.length;
+        });
+
+        // Get highest confidence intent
+        const topIntent = intents.reduce((max, intent) => 
+          intent.confidence > max.confidence ? intent : max
+        );
+
+        // Generate contextual response
+        if (topIntent.confidence > 0.3) {
+          return this.generateContextualResponse(topIntent.intent, msg);
+        }
+
+        // Fallback to enhanced general responses
+        return this.getEnhancedGeneralResponse(msg);
+      }
+
+      generateContextualResponse(intent, message) {
+        switch (intent) {
+          case 'product_recommendation':
+            return this.generateProductRecommendationResponse(message);
+          case 'pet_health':
+            return this.generateHealthResponse(message);
+          case 'pet_profile':
+            return this.generatePetProfileResponse();
+          case 'order_status':
+            return "I can help you track your order! Please provide your order number, or you can check your email for tracking details.";
+          case 'appointment':
+            return "I'd be happy to help you schedule an appointment! We offer grooming services (10am-7pm) and vet consultations (11am-6pm). Which service do you need?";
+          default:
+            return this.getEnhancedGeneralResponse(message);
+        }
+      }
+
+      generateProductRecommendationResponse(message) {
+        if (this.petProfiles.length === 0) {
+          return "I'd love to recommend products for you! First, could you tell me about your pet? What type of animal do you have and their age?";
+        }
+
+        const petTypes = this.petProfiles.map(p => p.type).join(', ');
+        const topRecs = this.recommendations.slice(0, 2).map(r => r.product.name).join(' and ');
+        
+        return `Based on your ${petTypes}, I recommend checking out our ${topRecs}. These are popular with similar pet parents! Would you like more specific recommendations?`;
+      }
+
+      generateHealthResponse(message) {
+        if (message.includes('emergency') || message.includes('urgent')) {
+          return "⚠️ For emergency situations, please contact our 24/7 emergency line immediately or visit the nearest animal hospital. For non-urgent health concerns, I can help schedule a vet consultation.";
+        }
+        
+        return "I understand you're concerned about your pet's health. While I can provide general information, it's best to consult with our experienced veterinarians. Would you like to schedule a consultation or learn about our health services?";
+      }
+
+      generatePetProfileResponse() {
+        if (this.petProfiles.length === 0) {
+          return "I'd love to learn about your pet! This helps me provide personalized recommendations. What type of pet do you have? (Dog, Cat, Bird, etc.)";
+        }
+        
+        const petInfo = this.petProfiles.map(p => `${p.name} (${p.type}, ${p.age} years old)`).join(', ');
+        return `I see you have: ${petInfo}. Would you like to add another pet or update any information?`;
+      }
+
+      getEnhancedGeneralResponse(msg) {
+        // Enhanced fallback with context awareness
+        if (this.petProfiles.length > 0) {
+          const petType = this.petProfiles[0].type.toLowerCase();
+          return `I'm here to help with your ${petType} and all your pet needs! Feel free to ask about products, health, services, or anything else pet-related.`;
+        }
+        
+        return "I'm your AI pet assistant! I can help with product recommendations, health advice, appointment scheduling, and more. What would you like to know?";
+      }
+
+      // ===== NEW AI/ML FEATURES =====
+      
+      // 1. Visual Search for Products
+      initVisualSearch() {
+        this.createVisualSearchUI();
+        this.loadImageClassificationModel();
+      }
+
+      createVisualSearchUI() {
+        const visualSearchHtml = `
+          <div id="visual-search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000;">
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:2rem; border-radius:1rem; width:90%; max-width:500px;">
+              <h3 style="margin-top:0; color:#4f46e5;">🔍 Visual Product Search</h3>
+              <p style="color:#666; margin-bottom:1.5rem;">Upload a photo to find similar products in our catalog</p>
+              
+              <div style="border:2px dashed #ddd; border-radius:0.5rem; padding:2rem; text-align:center; margin-bottom:1rem;">
+                <input type="file" id="visual-search-input" accept="image/*" style="display:none;" onchange="petShopAI.processVisualSearch(this)">
+                <button onclick="document.getElementById('visual-search-input').click()" style="background:#4f46e5; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem; cursor:pointer;">
+                  📸 Choose Image
+                </button>
+                <div id="visual-search-preview" style="margin-top:1rem;"></div>
+              </div>
+              
+              <div id="visual-search-results" style="margin-top:1rem;"></div>
+              
+              <div style="text-align:right; margin-top:1.5rem;">
+                <button onclick="petShopAI.closeVisualSearch()" style="background:#6b7280; color:white; border:none; padding:0.5rem 1rem; border-radius:0.3rem; margin-right:0.5rem;">Close</button>
+              </div>
+            </div>
+          </div>`;
+        
+        document.body.insertAdjacentHTML('beforeend', visualSearchHtml);
+        
+        // Add visual search button to navbar
+        const navbar = document.querySelector('.navbar-menu');
+        if (navbar) {
+          const visualSearchBtn = document.createElement('a');
+          visualSearchBtn.innerHTML = '🔍 Visual Search';
+          visualSearchBtn.style.cursor = 'pointer';
+          visualSearchBtn.onclick = () => this.openVisualSearch();
+          navbar.appendChild(visualSearchBtn);
+        }
+      }
+
+      loadImageClassificationModel() {
+        // Simulate loading a pre-trained image classification model
+        this.imageClassifier = {
+          classifyImage: (imageData) => {
+            // Mock classification - in real implementation, use TensorFlow.js or similar
+            const petTypes = ['dog', 'cat', 'bird', 'fish', 'rabbit'];
+            const accessories = ['toy', 'food', 'bed', 'collar', 'carrier'];
+            
+            // Simulate AI prediction
+            return {
+              petType: petTypes[Math.floor(Math.random() * petTypes.length)],
+              productType: accessories[Math.floor(Math.random() * accessories.length)],
+              confidence: 0.75 + Math.random() * 0.2
+            };
+          }
+        };
+      }
+
+      openVisualSearch() {
+        document.getElementById('visual-search-modal').style.display = 'block';
+      }
+
+      closeVisualSearch() {
+        document.getElementById('visual-search-modal').style.display = 'none';
+        document.getElementById('visual-search-preview').innerHTML = '';
+        document.getElementById('visual-search-results').innerHTML = '';
+      }
+
+      processVisualSearch(input) {
+        if (input.files && input.files[0]) {
+          const file = input.files[0];
+          const reader = new FileReader();
+          
+          reader.onload = (e) => {
+            // Show preview
+            const preview = document.getElementById('visual-search-preview');
+            preview.innerHTML = `<img src="${e.target.result}" style="max-width:200px; max-height:150px; border-radius:0.5rem;">`;
+            
+            // Simulate AI processing
+            setTimeout(() => {
+              const prediction = this.imageClassifier.classifyImage(e.target.result);
+              this.showVisualSearchResults(prediction);
+            }, 1500);
+            
+            // Show loading
+            document.getElementById('visual-search-results').innerHTML = `
+              <div style="text-align:center; padding:1rem;">
+                <div style="color:#4f46e5;">🤖 AI is analyzing your image...</div>
+              </div>`;
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      }
+
+      showVisualSearchResults(prediction) {
+        const products = [
+          { name: "Premium Dog Food", price: "₹799", category: "dog", type: "food" },
+          { name: "Cat Scratching Post", price: "₹1299", category: "cat", type: "toy" },
+          { name: "Bird Seed Mix", price: "₹349", category: "bird", type: "food" },
+          { name: "Pet Carrier", price: "₹1899", category: "general", type: "carrier" },
+          { name: "Comfort Pet Bed", price: "₹2199", category: "general", type: "bed" },
+          { name: "Adjustable Collar", price: "₹599", category: "general", type: "collar" }
+        ];
+
+        const matchedProducts = products.filter(p => 
+          p.category === prediction.petType || 
+          p.type === prediction.productType ||
+          p.category === 'general'
+        ).slice(0, 3);
+
+        const resultsHtml = `
+          <div style="background:#f0f9ff; padding:1rem; border-radius:0.5rem; margin-bottom:1rem;">
+            <div style="color:#4f46e5; font-weight:bold;">AI Analysis Complete!</div>
+            <div style="font-size:0.9rem; color:#666; margin-top:0.3rem;">
+              Detected: ${prediction.petType} product (${Math.round(prediction.confidence * 100)}% confidence)
+            </div>
+          </div>
+          
+          <div style="font-weight:bold; margin-bottom:0.8rem;">🎯 Similar Products Found:</div>
+          ${matchedProducts.map(product => `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.8rem; background:#f9fafb; border-radius:0.5rem; margin-bottom:0.5rem;">
+              <div>
+                <div style="font-weight:600;">${product.name}</div>
+                <div style="color:#666; font-size:0.9rem;">${product.price}</div>
+              </div>
+              <button style="background:#4f46e5; color:white; border:none; padding:0.4rem 0.8rem; border-radius:0.3rem; font-size:0.8rem;">View</button>
+            </div>
+          `).join('')}
+        `;
+        
+        document.getElementById('visual-search-results').innerHTML = resultsHtml;
+        
+        // Track visual search usage
+        this.trackBehavior('visual_search', { 
+          petType: prediction.petType, 
+          confidence: prediction.confidence 
+        });
+      }
+
+      // 2. Dynamic Pricing Engine
+      initDynamicPricing() {
+        this.pricingModel = {
+          basePrice: {},
+          demandMultiplier: {},
+          userSegmentDiscount: {},
+          inventoryFactor: {}
+        };
+        
+        this.loadPricingData();
+        this.calculateDynamicPrices();
+        this.updatePriceDisplay();
+      }
+
+      loadPricingData() {
+        // Initialize base pricing data
+        const products = [
+          'Natural Dog Food', 'Premium Cat Food', 'Bird Cage Large', 
+          'Fish Tank Filter', 'Pet Carrier', 'Comfort Pet Bed',
+          'Dog Toy Set', 'Cat Litter'
+        ];
+        
+        products.forEach(product => {
+          this.pricingModel.basePrice[product] = Math.floor(Math.random() * 2000) + 500;
+          this.pricingModel.demandMultiplier[product] = 0.8 + Math.random() * 0.4; // 0.8-1.2x
+          this.pricingModel.inventoryFactor[product] = 0.9 + Math.random() * 0.2; // 0.9-1.1x
+        });
+        
+        // User segment discounts
+        if (this.petProfiles.length > 2) {
+          this.pricingModel.userSegmentDiscount['multi_pet'] = 0.9; // 10% discount for multi-pet owners
+        }
+        if (this.userBehavior.totalPurchases > 5) {
+          this.pricingModel.userSegmentDiscount['loyal_customer'] = 0.85; // 15% discount for loyal customers
+        }
+      }
+
+      calculateDynamicPrices() {
+        this.dynamicPrices = {};
+        
+        Object.keys(this.pricingModel.basePrice).forEach(product => {
+          let price = this.pricingModel.basePrice[product];
+          
+          // Apply demand multiplier
+          price *= this.pricingModel.demandMultiplier[product];
+          
+          // Apply inventory factor
+          price *= this.pricingModel.inventoryFactor[product];
+          
+          // Apply user segment discounts
+          Object.values(this.pricingModel.userSegmentDiscount).forEach(discount => {
+            price *= discount;
+          });
+          
+          this.dynamicPrices[product] = Math.floor(price);
+        });
+      }
+
+      updatePriceDisplay() {
+        // Update prices on product cards
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach((card, index) => {
+          const productNames = Object.keys(this.dynamicPrices);
+          if (productNames[index]) {
+            const priceElement = card.querySelector('.product-price');
+            if (priceElement) {
+              const newPrice = this.dynamicPrices[productNames[index]];
+              const oldPrice = parseInt(priceElement.textContent.replace('₹', ''));
+              
+              priceElement.innerHTML = `₹${newPrice}`;
+              
+              // Show price change indicator
+              if (newPrice < oldPrice) {
+                priceElement.innerHTML += ` <span style="color:#10b981; font-size:0.8rem;">↓ Smart Price!</span>`;
+              }
+            }
+          }
+        });
+        
+        // Show personalized pricing notification
+        if (Object.keys(this.pricingModel.userSegmentDiscount).length > 0) {
+          setTimeout(() => {
+            this.showNotification('🎯 Personalized pricing applied based on your profile!');
+          }, 2000);
+        }
+      }
+
+      // 3. Pet Health Risk Prediction
+      initHealthRiskPrediction() {
+        this.healthRiskModel = this.loadHealthRiskModel();
+        this.analyzeHealthRisks();
+        this.createHealthDashboard();
+      }
+
+      loadHealthRiskModel() {
+        // Health risk factors database
+        return {
+          ageRisks: {
+            'puppy': ['vaccination', 'training', 'nutrition'],
+            'adult': ['dental_care', 'weight_management', 'exercise'],
+            'senior': ['joint_care', 'heart_health', 'vision_care']
+          },
+          breedRisks: {
+            'labrador': ['hip_dysplasia', 'obesity', 'eye_problems'],
+            'persian': ['breathing_issues', 'eye_discharge', 'kidney_disease'],
+            'beagle': ['epilepsy', 'hip_dysplasia', 'eye_problems'],
+            'budgie': ['respiratory_infections', 'mites', 'egg_binding']
+          },
+          typeRisks: {
+            'dog': ['heartworm', 'fleas', 'dental_disease'],
+            'cat': ['urinary_tract', 'dental_disease', 'kidney_disease'],
+            'bird': ['respiratory_infections', 'nutritional_deficiency'],
+            'fish': ['ich', 'fin_rot', 'water_quality_issues']
+          }
+        };
+      }
+
+      analyzeHealthRisks() {
+        this.healthPredictions = {};
+        
+        this.petProfiles.forEach(pet => {
+          const risks = [];
+          
+          // Age-based risks
+          const ageCategory = pet.age < 2 ? 'puppy' : pet.age > 7 ? 'senior' : 'adult';
+          if (this.healthRiskModel.ageRisks[ageCategory]) {
+            risks.push(...this.healthRiskModel.ageRisks[ageCategory]);
+          }
+          
+          // Breed-based risks
+          const breed = pet.breed.toLowerCase();
+          if (this.healthRiskModel.breedRisks[breed]) {
+            risks.push(...this.healthRiskModel.breedRisks[breed]);
+          }
+          
+          // Type-based risks
+          if (this.healthRiskModel.typeRisks[pet.type]) {
+            risks.push(...this.healthRiskModel.typeRisks[pet.type]);
+          }
+          
+          // Calculate risk scores
+          const riskCounts = {};
+          risks.forEach(risk => {
+            riskCounts[risk] = (riskCounts[risk] || 0) + 1;
+          });
+          
+          this.healthPredictions[pet.id] = {
+            name: pet.name,
+            type: pet.type,
+            topRisks: Object.entries(riskCounts)
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, 3)
+              .map(([risk, score]) => ({
+                risk: risk.replace(/_/g, ' ').toUpperCase(),
+                score: Math.min(score * 20, 85) + Math.random() * 15, // Normalize to 0-100
+                recommendations: this.getHealthRecommendations(risk)
+              }))
+          };
+        });
+      }
+
+      getHealthRecommendations(risk) {
+        const recommendations = {
+          'vaccination': ['Schedule regular vaccinations', 'Puppy vaccination series'],
+          'dental_care': ['Regular teeth cleaning', 'Dental chew toys', 'Professional dental checkup'],
+          'joint_care': ['Joint supplement', 'Low-impact exercise', 'Orthopedic bed'],
+          'weight_management': ['Weight control food', 'Portion control', 'Regular exercise'],
+          'hip_dysplasia': ['Hip & joint supplements', 'Physical therapy', 'Weight management'],
+          'respiratory_infections': ['Air purifier', 'Humidity control', 'Respiratory vitamins'],
+          'kidney_disease': ['Kidney support diet', 'Regular blood tests', 'Hydration support']
+        };
+        
+        return recommendations[risk] || ['Regular vet checkups', 'Healthy diet', 'Exercise routine'];
+      }
+
+      createHealthDashboard() {
+        if (this.petProfiles.length === 0) return;
+        
+        const dashboardHtml = `
+          <div id="health-dashboard" style="background:#fff; border-radius:1rem; padding:1.5rem; margin:1rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+            <h3 style="margin-top:0; color:#dc2626; display:flex; align-items:center; gap:0.5rem;">
+              🏥 AI Health Risk Analysis
+            </h3>
+            <div id="health-predictions-content">
+              ${Object.values(this.healthPredictions).map(prediction => `
+                <div style="border:1px solid #e5e7eb; border-radius:0.5rem; padding:1rem; margin-bottom:1rem;">
+                  <h4 style="margin:0 0 0.8rem 0; color:#4f46e5;">${prediction.name} (${prediction.type})</h4>
+                  <div style="display:grid; gap:0.5rem;">
+                    ${prediction.topRisks.map(item => `
+                      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem; background:#f9fafb; border-radius:0.3rem;">
+                        <div>
+                          <div style="font-weight:600; color:#dc2626;">${item.risk}</div>
+                          <div style="font-size:0.8rem; color:#666;">Risk Score: ${Math.round(item.score)}%</div>
+                        </div>
+                        <button onclick="petShopAI.showHealthRecommendations('${prediction.name}', '${item.risk}')" 
+                                style="background:#10b981; color:white; border:none; padding:0.3rem 0.6rem; border-radius:0.3rem; font-size:0.8rem;">
+                          View Tips
+                        </button>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div style="text-align:center; margin-top:1rem;">
+              <button onclick="petShopAI.generateHealthReport()" 
+                      style="background:#4f46e5; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem;">
+                📊 Generate Full Health Report
+              </button>
+            </div>
+          </div>`;
+        
+        // Insert dashboard after recommendations section
+        const recommendationsSection = document.querySelector('#ai-recommendations');
+        if (recommendationsSection) {
+          recommendationsSection.insertAdjacentHTML('afterend', dashboardHtml);
+        }
+      }
+
+      showHealthRecommendations(petName, riskType) {
+        const recommendations = this.getHealthRecommendations(riskType.toLowerCase().replace(/ /g, '_'));
+        
+        const modal = document.createElement('div');
+        modal.id = 'health-recommendations-modal';
+        modal.style.cssText = `
+          position:fixed; top:0; left:0; width:100%; height:100%; 
+          background:rgba(0,0,0,0.8); z-index:10000; display:flex; 
+          align-items:center; justify-content:center; cursor:pointer;
+        `;
+        
+        modal.innerHTML = `
+          <div style="background:white; padding:2rem; border-radius:1rem; max-width:500px; width:90%; cursor:default; position:relative;">
+            <button onclick="document.getElementById('health-recommendations-modal').remove()" 
+                    style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:#666; cursor:pointer; padding:0.2rem;"
+                    title="Close">
+              ×
+            </button>
+            <h3 style="margin-top:0; color:#dc2626; padding-right:2rem;">🏥 Health Recommendations for ${petName}</h3>
+            <h4 style="color:#4f46e5; margin-bottom:1rem;">Risk: ${riskType}</h4>
+            <ul style="padding-left:1.2rem; margin-bottom:1.5rem;">
+              ${recommendations.map(rec => `<li style="margin-bottom:0.8rem; line-height:1.4;">${rec}</li>`).join('')}
+            </ul>
+            <div style="text-align:center; margin-top:1.5rem;">
+              <button onclick="document.getElementById('health-recommendations-modal').remove()" 
+                      style="background:#4f46e5; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem; cursor:pointer; font-weight:600;">
+                Got it, thanks!
+              </button>
+            </div>
+          </div>
+        `;
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.remove();
+          }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function closeOnEscape(e) {
+          if (e.key === 'Escape') {
+            const modalElement = document.getElementById('health-recommendations-modal');
+            if (modalElement) {
+              modalElement.remove();
+              document.removeEventListener('keydown', closeOnEscape);
+            }
+          }
+        });
+        
+        document.body.appendChild(modal);
+        
+        // Track health consultation
+        this.trackBehavior('health_consultation', { pet: petName, risk: riskType });
+      }
+
+      generateHealthReport() {
+        const reportData = {
+          generatedAt: new Date().toISOString(),
+          pets: this.healthPredictions,
+          totalPets: this.petProfiles.length,
+          averageRiskScore: Object.values(this.healthPredictions)
+            .flatMap(p => p.topRisks.map(r => r.score))
+            .reduce((a, b) => a + b, 0) / Object.values(this.healthPredictions).length || 0
+        };
+        
+        // Store report for user
+        localStorage.setItem('latestHealthReport', JSON.stringify(reportData));
+        
+        this.showNotification('📊 Health report generated! Check your profile for details.');
+        
+        // Refresh health reports display if modal is open
+        const modal = document.getElementById('pet-profile-modal');
+        const healthTab = document.getElementById('health-tab-content');
+        if (modal && modal.style.display !== 'none' && healthTab && healthTab.style.display !== 'none') {
+          loadHealthReports();
+        }
+        
+        // Track report generation
+        this.trackBehavior('health_report_generated', { 
+          pets: reportData.totalPets, 
+          avgRisk: reportData.averageRiskScore 
+        });
+      }
+    }
+
+    // Initialize AI system
+    let petShopAI;
+    
+    // Responsive Navbar Toggle
+    function toggleMenu() {
+      document.getElementById('navbar-menu').classList.toggle('active');
+    }
+
+    // Enhanced Cart Logic with AI tracking
+    let cartCount = 0;
+    function addToCart() {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
+      if (petShopAI) {
+        petShopAI.showNotification('Item added to cart! 🛒');
+      }
+    }
+
+    // Pet Profile Management Functions
+    function openPetProfileModal() {
+      document.getElementById('pet-profile-modal').style.display = 'block';
+      displayPetProfiles();
+      loadHealthReports(); // Load health reports when opening modal
+    }
+
+    function closePetProfileModal() {
+      document.getElementById('pet-profile-modal').style.display = 'none';
+    }
+
+    function switchProfileTab(tabName) {
+      // Hide all tab contents
+      document.getElementById('pets-tab-content').style.display = 'none';
+      document.getElementById('health-tab-content').style.display = 'none';
+      
+      // Reset tab button styles
+      document.getElementById('pets-tab').style.cssText = 'background:none; border:none; padding:0.8rem 1.5rem; color:#666; cursor:pointer;';
+      document.getElementById('health-tab').style.cssText = 'background:none; border:none; padding:0.8rem 1.5rem; color:#666; cursor:pointer;';
+      
+      // Show selected tab and highlight button
+      if (tabName === 'pets') {
+        document.getElementById('pets-tab-content').style.display = 'block';
+        document.getElementById('pets-tab').style.cssText = 'background:none; border:none; padding:0.8rem 1.5rem; color:#4f46e5; font-weight:700; border-bottom:2px solid #4f46e5; cursor:pointer;';
+        displayPetProfiles();
+      } else if (tabName === 'health') {
+        document.getElementById('health-tab-content').style.display = 'block';
+        document.getElementById('health-tab').style.cssText = 'background:none; border:none; padding:0.8rem 1.5rem; color:#4f46e5; font-weight:700; border-bottom:2px solid #4f46e5; cursor:pointer;';
+        loadHealthReports();
+      }
+    }
+
+    function loadHealthReports() {
+      const latestReport = localStorage.getItem('latestHealthReport');
+      const container = document.getElementById('health-reports-container');
+      
+      if (!latestReport) {
+        container.innerHTML = `
+          <div style="text-align:center; color:#666; padding:2rem;">
+            <div style="font-size:3rem; margin-bottom:1rem;">📊</div>
+            <p><strong>No health reports generated yet.</strong></p>
+            <p style="font-size:0.9rem; margin-bottom:1.5rem;">Generate your first health report by clicking the button in the Health Dashboard below the recommendations section.</p>
+            <button onclick="closePetProfileModal(); document.getElementById('health-dashboard')?.scrollIntoView({behavior:'smooth'})" 
+                    style="background:#4f46e5; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem; cursor:pointer;">
+              Go to Health Dashboard
+            </button>
+          </div>`;
+        return;
+      }
+      
+      const report = JSON.parse(latestReport);
+      const reportDate = new Date(report.generatedAt).toLocaleDateString();
+      
+      container.innerHTML = `
+        <div style="background:#f0f9ff; padding:1.5rem; border-radius:1rem; margin-bottom:1.5rem;">
+          <h3 style="color:#4f46e5; margin:0 0 0.5rem 0;">📊 Latest Health Report</h3>
+          <p style="color:#666; font-size:0.9rem; margin:0;">Generated on ${reportDate}</p>
+        </div>
+        
+        <div style="display:grid; gap:1rem; margin-bottom:1.5rem;">
+          <div style="display:flex; justify-content:space-between; padding:1rem; background:#f9fafb; border-radius:0.5rem;">
+            <span style="font-weight:600;">Total Pets Analyzed:</span>
+            <span style="color:#4f46e5; font-weight:700;">${report.totalPets}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:1rem; background:#f9fafb; border-radius:0.5rem;">
+            <span style="font-weight:600;">Average Risk Score:</span>
+            <span style="color:${report.averageRiskScore > 60 ? '#dc2626' : report.averageRiskScore > 30 ? '#f59e0b' : '#10b981'}; font-weight:700;">
+              ${Math.round(report.averageRiskScore)}%
+            </span>
+          </div>
+        </div>
+        
+        <div style="margin-bottom:1.5rem;">
+          <h4 style="color:#4f46e5; margin-bottom:1rem;">🐾 Individual Pet Analysis</h4>
+          ${Object.values(report.pets).map(pet => `
+            <div style="border:1px solid #e5e7eb; border-radius:0.5rem; padding:1rem; margin-bottom:1rem;">
+              <h5 style="color:#4f46e5; margin:0 0 0.8rem 0;">${pet.name} (${pet.type})</h5>
+              <div style="display:grid; gap:0.5rem;">
+                ${pet.topRisks.map(risk => `
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem; background:#f9fafb; border-radius:0.3rem;">
+                    <div>
+                      <div style="font-weight:600; color:#dc2626; font-size:0.9rem;">${risk.risk}</div>
+                    </div>
+                    <div style="color:${risk.score > 60 ? '#dc2626' : risk.score > 30 ? '#f59e0b' : '#10b981'}; font-weight:700;">
+                      ${Math.round(risk.score)}%
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div style="text-align:center;">
+          <button onclick="petShopAI.generateHealthReport()" 
+                  style="background:#10b981; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem; margin-right:0.5rem; cursor:pointer;">
+            🔄 Generate New Report
+          </button>
+          <button onclick="downloadHealthReport()" 
+                  style="background:#6b7280; color:white; border:none; padding:0.8rem 1.5rem; border-radius:0.5rem; cursor:pointer;">
+            📥 Download Report
+          </button>
+        </div>
+      `;
+    }
+
+    function downloadHealthReport() {
+      const report = localStorage.getItem('latestHealthReport');
+      if (!report) {
+        alert('No health report available to download.');
+        return;
+      }
+      
+      const data = JSON.parse(report);
+      const reportText = `
+PAWS & WHISKERS - PET HEALTH REPORT
+Generated: ${new Date(data.generatedAt).toLocaleString()}
+
+SUMMARY:
+- Total Pets: ${data.totalPets}
+- Average Risk Score: ${Math.round(data.averageRiskScore)}%
+
+INDIVIDUAL PET ANALYSIS:
+${Object.values(data.pets).map(pet => `
+${pet.name} (${pet.type}):
+${pet.topRisks.map(risk => `  • ${risk.risk}: ${Math.round(risk.score)}% risk`).join('\n')}
+`).join('\n')}
+
+This report is generated by AI analysis and should not replace professional veterinary advice.
+      `.trim();
+      
+      const blob = new Blob([reportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `health-report-${new Date().toISOString().split('T')[0]}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function addPetProfile() {
+      const name = document.getElementById('pet-name').value.trim();
+      const type = document.getElementById('pet-type').value;
+      const age = document.getElementById('pet-age').value;
+      const breed = document.getElementById('pet-breed').value.trim();
+
+      if (!name || !type || !age) {
+        alert('Please fill in all required fields (Name, Type, Age)');
+        return;
+      }
+
+      const newPet = {
+        id: Date.now(),
+        name: name,
+        type: type,
+        age: parseInt(age),
+        breed: breed || 'Mixed',
+        addedDate: new Date().toISOString()
+      };
+
+      petShopAI.petProfiles.push(newPet);
+      petShopAI.savePetProfiles(petShopAI.petProfiles);
+      
+      // Clear form
+      document.getElementById('pet-name').value = '';
+      document.getElementById('pet-type').value = '';
+      document.getElementById('pet-age').value = '';
+      document.getElementById('pet-breed').value = '';
+
+      displayPetProfiles();
+      petShopAI.personalizeContent();
+      petShopAI.generateRecommendations();
+      petShopAI.showNotification(`${name} added to your pet profiles! 🐾`);
+    }
+
+    function displayPetProfiles() {
+      const container = document.getElementById('pet-profiles-list');
+      const profiles = petShopAI.petProfiles;
+
+      if (profiles.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic;">No pets added yet. Add your first pet below!</p>';
+        return;
+      }
+
+      container.innerHTML = profiles.map(pet => `
+        <div style="background:#f7f8fa; border-radius:1rem; padding:1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700; color:#4f46e5;">${pet.name}</div>
+            <div style="color:#666; font-size:0.9rem;">${pet.type} • ${pet.age} years old • ${pet.breed}</div>
+          </div>
+          <button onclick="removePetProfile(${pet.id})" style="background:#ef4444; color:#fff; border:none; padding:0.3rem 0.7rem; border-radius:0.3rem; font-size:0.8rem;">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function removePetProfile(petId) {
+      if (confirm('Are you sure you want to remove this pet profile?')) {
+        petShopAI.petProfiles = petShopAI.petProfiles.filter(pet => pet.id !== petId);
+        petShopAI.savePetProfiles(petShopAI.petProfiles);
+        displayPetProfiles();
+        petShopAI.personalizeContent();
+        petShopAI.generateRecommendations();
+        petShopAI.showNotification('Pet profile removed');
+      }
+    }
+
+    // Initialize AI System when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+      // Add CSS animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+        .ai-highlight {
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7); }
+          70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Initialize AI System
+      petShopAI = new PetShopAI();
+      
+      // Show welcome message for new users
+      if (petShopAI.petProfiles.length === 0 && !localStorage.getItem('welcomeShown')) {
+        setTimeout(() => {
+          petShopAI.showNotification('👋 Welcome! Add your pet profiles for personalized recommendations!');
+          localStorage.setItem('welcomeShown', 'true');
+        }, 2000);
+      }
+    });
+
+    // Rotating Pet Care Tips
+    const tips = [
+      {
+        text: "Feed your pet a balanced diet for optimal health.",
+        link: "https://www.youtube.com/watch?v=1Ne1hqOXKKI"
+      },
+      {
+        text: "Regular grooming keeps your pet's coat shiny and healthy.",
+        link: "https://www.youtube.com/watch?v=JQ9QF9AWj6g"
+      },
+      {
+        text: "Exercise your pet daily to maintain a healthy weight.",
+        link: "https://www.youtube.com/watch?v=5bYv6l1zGqA"
+      },
+      {
+        text: "Provide fresh water at all times for hydration.",
+        link: "https://www.youtube.com/watch?v=QwQpGzKjFqA"
+      },
+      {
+        text: "Schedule regular vet checkups for preventive care.",
+        link: "https://www.youtube.com/watch?v=3Q8zTVlD7yY"
+      }
+    ];
+    let tipIndex = 0;
+    function showTip() {
+      document.getElementById('tip-text').textContent = tips[tipIndex].text;
+      document.getElementById('tip-link').href = tips[tipIndex].link;
+      tipIndex = (tipIndex + 1) % tips.length;
+    }
+    setInterval(showTip, 10000);
+    window.addEventListener('DOMContentLoaded', showTip);
+  </script>
+</body>
 </html>
