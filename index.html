@@ -354,17 +354,20 @@
     <p>Email: info@petflash.com | Phone: (555) 123-4567</p>
     <p style="color:#7c3aed; font-size:1rem;">Free shipping on orders $49+</p>
   </section>
-  <div class="chatbot" aria-label="Chatbot container" style="z-index:10;">
-    <h3>Chatbot</h3>
-    <div id="chat-box" aria-live="polite" aria-atomic="false"></div>
-    <input
-      type="text"
-      id="user-input"
-      placeholder="Ask me something..."
-      aria-label="Type your question here"
-      onkeydown="if(event.key === 'Enter'){ sendMessage(); }"
-    />
-    <button onclick="sendMessage()">Send</button>
+  <!-- Petco-style Chatbot -->
+  <button id="chatbot-toggle" aria-label="Open chat" style="position:fixed; bottom:2rem; right:2rem; background:#7c3aed; color:#fff; border:none; border-radius:50%; width:60px; height:60px; box-shadow:0 2px 8px rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; z-index:101; cursor:pointer;">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </button>
+  <div id="chatbot-window" aria-label="Chatbot container" style="position:fixed; bottom:2rem; right:2rem; background:#fff; border-radius:1rem; box-shadow:0 2px 16px rgba(0,0,0,0.18); max-width:340px; width:90vw; z-index:102; font-size:0.95rem; display:none; flex-direction:column;">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; background:#7c3aed; color:#fff; border-top-left-radius:1rem; border-top-right-radius:1rem;">
+      <span style="font-weight:700; font-size:1.1rem;">Chat with Paws and Whiskers</span>
+      <button id="chatbot-close" aria-label="Close chat" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+    </div>
+    <div id="chat-box" aria-live="polite" aria-atomic="false" style="height:200px; overflow-y:auto; border-bottom:1px solid #eee; padding:1rem; background:#f9f9f9;"></div>
+    <div style="display:flex; gap:0.5rem; padding:1rem;">
+      <input type="text" id="user-input" placeholder="Ask me something..." aria-label="Type your question here" style="flex:1; padding:0.5rem; border-radius:0.5rem; border:1px solid #ccc; font-size:1rem;" onkeydown="if(event.key === 'Enter'){ sendMessage(); }" />
+      <button onclick="sendMessage()" style="background:#7c3aed; color:#fff; border:none; padding:0.5rem 1rem; border-radius:1rem; font-weight:700; cursor:pointer; transition:background 0.2s;">Send</button>
+    </div>
   </div>
  
   <script>
@@ -428,6 +431,22 @@
     window.addEventListener('DOMContentLoaded', updatePetCareLink);
 
     // ...existing chatbot code...
+    // Petco-style chatbot toggle logic
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
+    chatbotToggle.addEventListener('click', () => {
+      chatbotWindow.style.display = 'flex';
+      chatbotToggle.style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('user-input').focus();
+      }, 200);
+    });
+    chatbotClose.addEventListener('click', () => {
+      chatbotWindow.style.display = 'none';
+      chatbotToggle.style.display = 'flex';
+    });
+
     async function sendMessage() {
       const input = document.getElementById("user-input");
       const chatBox = document.getElementById("chat-box");
