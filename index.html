@@ -455,6 +455,19 @@
     if(msg.includes('gift') || msg.includes('voucher') || msg.includes('certificate')) {
       return 'We offer gift vouchers that can be redeemed in-store or online. Perfect for pet lovers!';
     }
+    // Doctor/clinic availability queries
+    if(msg.match(/doctor|vet.*available|clinic.*available|available doctor|available vet|available clinic|doctor availability|vet availability|clinic availability/i)) {
+      return 'Our veterinary doctors are available Monday to Saturday, 10am to 6pm. Would you like to book an appointment, know about walk-in hours, or ask about a specific health concern?';
+    }
+    if(msg.match(/doctor|vet|clinic/i) && msg.match(/hours|timing|schedule|open|close|when/i)) {
+      return 'Our clinic is open Monday to Saturday, 10am to 6pm. Would you like to book a visit or ask about a specific service?';
+    }
+    if(msg.match(/doctor|vet|clinic/i) && msg.match(/location|where|address/i)) {
+      return 'Our veterinary clinic is located at 123 Pet Lane, City Center. Would you like directions or more details?';
+    }
+    if(msg.match(/doctor|vet|clinic/i) && msg.match(/fees|cost|price|charges/i)) {
+      return 'Clinic fees depend on the service: checkup, vaccination, or emergency care. Would you like a price list or details for a specific service?';
+    }
     return 'I\'m sorry, I didn\'t quite understand that. Can you please rephrase or provide more details?';
   }
   // Menu toggle for mobile
