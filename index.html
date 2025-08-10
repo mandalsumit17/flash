@@ -324,7 +324,9 @@
   </section>
   <section class="video-section" style="z-index:1;">
     <h2>Pet Care Tips</h2>
-    <iframe src="https://www.youtube.com/embed/1Ne1hqOXKKI" allowfullscreen title="Pet Care Video"></iframe>
+    <a id="pet-care-link" href="https://www.youtube.com/watch?v=1Ne1hqOXKKI" target="_blank" style="display:inline-block; font-size:1.2rem; color:#7c3aed; background:#fff; padding:1rem 2rem; border-radius:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.08); font-weight:700; text-decoration:none; transition:background 0.2s;">
+      Dog Care Tips
+    </a>
   </section>
   <section id="reviews" style="text-align:center;margin:3rem 0;z-index:1;">
     <h2>Customer Reviews</h2>
@@ -391,6 +393,40 @@
       document.getElementById('search').value = val;
       document.getElementById('suggestions').style.display = 'none';
     }
+
+    // Rotating Pet Care Tips YouTube Link
+    const petCareVideos = [
+      {
+        url: "https://www.youtube.com/watch?v=1Ne1hqOXKKI",
+        title: "Dog Care Tips"
+      },
+      {
+        url: "https://www.youtube.com/watch?v=5bYv6l1zGqA",
+        title: "Cat Care Tips"
+      },
+      {
+        url: "https://www.youtube.com/watch?v=QwQpGzKjFqA",
+        title: "Rabbit Care Tips"
+      },
+      {
+        url: "https://www.youtube.com/watch?v=JQ9QF9AWj6g",
+        title: "Pet Grooming Tips"
+      },
+      {
+        url: "https://www.youtube.com/watch?v=3Q8zTVlD7yY",
+        title: "Healthy Pet Diet Tips"
+      }
+    ];
+    let currentVideo = 0;
+    function updatePetCareLink() {
+      const link = document.getElementById('pet-care-link');
+      link.href = petCareVideos[currentVideo].url;
+      link.textContent = petCareVideos[currentVideo].title;
+      currentVideo = (currentVideo + 1) % petCareVideos.length;
+    }
+    setInterval(updatePetCareLink, 10000);
+    window.addEventListener('DOMContentLoaded', updatePetCareLink);
+
     // ...existing chatbot code...
     async function sendMessage() {
       const input = document.getElementById("user-input");
