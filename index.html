@@ -82,15 +82,27 @@
       }
     }
     .hero {
-      background: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      position: relative;
       min-height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
       border-bottom-left-radius: 2rem;
       border-bottom-right-radius: 2rem;
       box-shadow: 0 4px 24px rgba(79,70,229,0.08);
+      overflow: hidden;
+    }
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.7) blur(1px);
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
     }
     .hero-overlay {
       position: absolute;
@@ -98,6 +110,14 @@
       background: rgba(79,70,229,0.18);
       border-bottom-left-radius: 2rem;
       border-bottom-right-radius: 2rem;
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: #fff;
+      padding: 2rem;
     }
     .hero-content {
       position: relative;
@@ -291,6 +311,10 @@
 
   <!-- Hero Banner -->
   <section class="hero" id="home">
+    <video class="hero-video-bg" autoplay muted loop playsinline>
+      <source src="yt1z.net - Puppy Love in 2 Minutes Cute Funny Puppies (1080p).mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>Happy Pets, Happy Homes</h1>
