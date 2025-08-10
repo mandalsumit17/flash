@@ -419,13 +419,34 @@
     if(msg.includes('offer') || msg.includes('discount')) return 'Check our Shop section for ongoing offers and discounts.';
     // Products
     if((msg.includes('product') || msg.includes('food') || msg.includes('shop') || msg.includes('available')) && !msg.includes('price') && !msg.includes('cost')) {
-      if(msg.includes('dog')) return 'We have a variety of dog food including dry, wet, and treats from top brands. Would you like recommendations for your dog’s age or breed?';
-      if(msg.includes('cat')) return 'We offer premium cat food, both dry and wet, for kittens and adults. Would you like to know about grain-free or special diet options?';
-      if(msg.includes('bird')) return 'We stock bird food for parrots, budgies, and more. Ask for details on specific bird food.';
-      if(msg.includes('rabbit')) return 'We have organic rabbit food and treats. Would you like to know about ingredients or feeding tips?';
-      if(msg.includes('small pet') || msg.includes('hamster') || msg.includes('guinea pig')) return 'We offer food and treats for hamsters, guinea pigs, and other small pets.';
-      return 'We have pet food for dogs, cats, birds, rabbits, and small pets. Please specify your pet type or ask for recommendations!';
+      if(msg.includes('dog')) return 'Great! Are you looking for dog food, toys, grooming products, or something else? For food, do you prefer dry, wet, or treats? Would you like recommendations based on age or breed?';
+      if(msg.includes('cat')) return 'Awesome! Are you interested in cat food, litter, toys, or accessories? For food, do you need kitten, adult, or special diet options?';
+      if(msg.includes('bird')) return 'Sure! Are you shopping for bird food, cages, toys, or health products? What type of bird do you have?';
+      if(msg.includes('rabbit')) return 'Of course! Are you looking for rabbit food, bedding, toys, or grooming supplies? Would you like advice on feeding or care?';
+      if(msg.includes('hamster') || msg.includes('guinea pig') || msg.includes('small pet')) return 'Great! Are you interested in food, cages, bedding, or toys for your small pet? Which pet do you have: hamster, guinea pig, or another?';
+      return 'What type of pet do you have? (Dog, Cat, Bird, Rabbit, Hamster, Guinea Pig, Other) Select a pet type to see relevant products and advice.';
     }
+
+    // High-level questions
+    if(msg.includes('services')) return 'We offer grooming, veterinary clinic, adoption, and pet events. Which service are you interested in?';
+    if(msg.includes('grooming')) return 'Our grooming service includes baths, haircuts, nail trims, and more. Would you like to book an appointment or know about pricing?';
+    if(msg.includes('clinic') || msg.includes('vet')) return 'Our veterinary clinic provides checkups, vaccinations, and emergency care. Do you want to book a visit or ask about a specific health concern?';
+    if(msg.includes('adoption')) return 'We help match pets with loving families. Are you looking to adopt a dog, cat, or another pet? Would you like to know about the process or available pets?';
+    if(msg.includes('event')) return 'We host pet events like training workshops and adoption drives. Would you like to see upcoming events or register?';
+
+    // Low-level, specific questions
+    if(msg.includes('price') || msg.includes('cost')) return 'Prices vary by product and service. Please specify what you are interested in (e.g., dog food, grooming, clinic visit) for details.';
+    if(msg.includes('brand')) return 'We carry top brands like Royal Canin, Pedigree, Whiskas, and more. Ask about a specific brand or product for recommendations.';
+    if(msg.includes('delivery')) return 'We offer fast home delivery and in-store pickup. Would you like to know about delivery times or fees?';
+    if(msg.includes('return') || msg.includes('refund')) return 'You can return most products within 30 days. Would you like to start a return or know more about our policy?';
+    if(msg.includes('discount') || msg.includes('offer') || msg.includes('sale')) return 'We have ongoing discounts and special offers. Would you like to see current deals or get a coupon code?';
+    if(msg.includes('subscribe') || msg.includes('subscription')) return 'You can subscribe for regular deliveries of pet food and supplies. Would you like to set up a subscription or learn about benefits?';
+    if(msg.includes('care tip') || msg.includes('advice')) return 'We share pet care tips and advice in our Tips section. Would you like tips for a specific pet or topic?';
+    if(msg.includes('contact') || msg.includes('help')) return 'You can contact us via phone, email, or live chat. Would you like our contact details or help with something specific?';
+    if(msg.includes('location') || msg.includes('store')) return 'We are located at 123 Pet Lane, City Center. Would you like directions or store hours?';
+    if(msg.includes('appointment')) return 'Would you like to book an appointment for grooming, clinic, or another service? Please specify.';
+    if(msg.includes('payment')) return 'We accept credit/debit cards, UPI, and cash. Would you like help with payment options or checkout?';
+    if(msg.includes('recommend') || msg.includes('suggest')) return 'Tell me about your pet and needs, and I can recommend products or services!';
     if(msg.includes('brand')) return 'We carry top brands like Pedigree, Whiskas, Royal Canin, Drools, and more.';
     if(msg.includes('organic') || msg.includes('natural')) return 'Yes, we have organic and natural pet products. Please specify your pet type.';
     if(msg.includes('price') || msg.includes('cost')) return 'All prices are listed in Indian Rupees. Let me know which product or service you want details for!';
