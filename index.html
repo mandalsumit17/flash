@@ -309,8 +309,9 @@
       <a href="#home">Home</a>
       <a href="#shop">Shop</a>
       <a href="#about">About</a>
-      <a href="#tips">Pet Care Tips</a>
-      <a href="#contact">Contact</a>
+  <a href="#services">Services</a>
+  <a href="#tips">Pet Care Tips</a>
+  <a href="#contact">Contact</a>
     </div>
   </nav>
 
@@ -328,7 +329,98 @@
     </div>
   </section>
 
+  <!-- Services Section -->
+  <section class="products" id="services" style="margin-bottom:3rem;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 2rem;">
+      <h2 style="color:#4f46e5; font-size:2rem; font-weight:800; margin-bottom:2rem; text-align:center;">Our Services</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2rem;">
+        <div style="background:#fff; border-radius:1.5rem; box-shadow:0 2px 12px rgba(79,70,229,0.07); padding:2rem 1.5rem; text-align:center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Grooming" style="width:70px; margin-bottom:1rem;" />
+          <h3 style="color:#4f46e5; font-size:1.2rem; font-weight:700;">Grooming</h3>
+          <p>Professional grooming for dogs, cats, and small pets. Bath, haircut, nail trim, and more.</p>
+        </div>
+        <div style="background:#fff; border-radius:1.5rem; box-shadow:0 2px 12px rgba(79,70,229,0.07); padding:2rem 1.5rem; text-align:center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Pet Clinic" style="width:70px; margin-bottom:1rem;" />
+          <h3 style="color:#4f46e5; font-size:1.2rem; font-weight:700;">Pet Clinic</h3>
+          <p>Experienced veterinarians for checkups, vaccinations, and health consultations.</p>
+        </div>
+        <div style="background:#fff; border-radius:1.5rem; box-shadow:0 2px 12px rgba(79,70,229,0.07); padding:2rem 1.5rem; text-align:center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Adoption" style="width:70px; margin-bottom:1rem;" />
+          <h3 style="color:#4f46e5; font-size:1.2rem; font-weight:700;">Adoption</h3>
+          <p>Find your new best friend! We help connect loving families with pets in need of homes.</p>
+        </div>
+        <div style="background:#fff; border-radius:1.5rem; box-shadow:0 2px 12px rgba(79,70,229,0.07); padding:2rem 1.5rem; text-align:center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Pet Events" style="width:70px; margin-bottom:1rem;" />
+          <h3 style="color:#4f46e5; font-size:1.2rem; font-weight:700;">Pet Events</h3>
+          <p>Join our fun pet events: training workshops, meetups, and more for pet lovers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Product Section -->
+</body>
+<!-- Chatbot Floating Button and Modal -->
+<div id="chatbot-btn" style="position:fixed; bottom:32px; right:32px; z-index:9999;">
+  <button onclick="openChatbot()" style="background:#4f46e5; color:#fff; border:none; border-radius:50%; width:64px; height:64px; box-shadow:0 2px 12px rgba(79,70,229,0.18); font-size:2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+    💬
+  </button>
+</div>
+<div id="chatbot-modal" style="display:none; position:fixed; bottom:110px; right:32px; width:340px; max-width:90vw; background:#fff; border-radius:1.5rem; box-shadow:0 4px 24px rgba(79,70,229,0.18); z-index:10000;">
+  <div style="padding:1rem 1.5rem; border-bottom:1px solid #e0e7ff; background:#4f46e5; color:#fff; border-top-left-radius:1.5rem; border-top-right-radius:1.5rem; font-weight:700; font-size:1.1rem;">Paws & Whiskers Chatbot <span style="float:right; cursor:pointer;" onclick="closeChatbot()">&times;</span></div>
+  <div id="chatbot-messages" style="height:260px; overflow-y:auto; padding:1rem; font-size:1rem; color:#2d3748; background:#f7f8fa;"></div>
+  <div style="padding:1rem; border-top:1px solid #e0e7ff; display:flex; gap:0.5rem;">
+    <input id="chatbot-input" type="text" placeholder="Type your question..." style="flex:1; padding:0.7rem 1rem; border-radius:1rem; border:1px solid #e0e7ff; font-size:1rem;" onkeydown="if(event.key==='Enter'){sendChatbotMessage();}" />
+    <button onclick="sendChatbotMessage()" style="background:#4f46e5; color:#fff; border:none; border-radius:1rem; padding:0.7rem 1.2rem; font-weight:700; font-size:1rem; cursor:pointer;">Send</button>
+  </div>
+</div>
+<script>
+  // Chatbot logic
+  function openChatbot() {
+    document.getElementById('chatbot-modal').style.display = 'block';
+    document.getElementById('chatbot-btn').style.display = 'none';
+    if(document.getElementById('chatbot-messages').innerHTML.trim() === '') {
+      addChatbotMessage('Hi! I am your pet shop assistant. How can I help you today?');
+    }
+    document.getElementById('chatbot-input').focus();
+  }
+  function closeChatbot() {
+    document.getElementById('chatbot-modal').style.display = 'none';
+    document.getElementById('chatbot-btn').style.display = 'block';
+  }
+  function addChatbotMessage(msg, isUser) {
+    const messages = document.getElementById('chatbot-messages');
+    const div = document.createElement('div');
+    div.style.marginBottom = '0.7rem';
+    div.style.textAlign = isUser ? 'right' : 'left';
+    div.innerHTML = isUser ? `<span style='background:#e0e7ff; color:#4f46e5; padding:0.5rem 1rem; border-radius:1rem; display:inline-block;'>${msg}</span>` : `<span style='background:#fff; color:#2d3748; padding:0.5rem 1rem; border-radius:1rem; display:inline-block;'>${msg}</span>`;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  function sendChatbotMessage() {
+    const input = document.getElementById('chatbot-input');
+    const userMsg = input.value.trim();
+    if(!userMsg) return;
+    addChatbotMessage(userMsg, true);
+    input.value = '';
+    setTimeout(()=>{
+      addChatbotMessage(getChatbotResponse(userMsg));
+    }, 600);
+  }
+  function getChatbotResponse(msg) {
+    msg = msg.toLowerCase();
+    if(msg.includes('groom') || msg.includes('grooming')) return 'We offer professional grooming for dogs, cats, and small pets. You can book an appointment or walk in!';
+    if(msg.includes('clinic') || msg.includes('vet') || msg.includes('doctor')) return 'Our pet clinic provides checkups, vaccinations, and health consultations. Would you like to book a visit?';
+    if(msg.includes('adopt') || msg.includes('adoption')) return 'We help connect loving families with pets in need of homes. Ask us about available pets for adoption!';
+    if(msg.includes('event')) return 'We host pet events like training workshops and meetups. Check our events calendar for upcoming fun!';
+    if(msg.includes('food') || msg.includes('product') || msg.includes('shop')) return 'We have a wide range of pet food and products. Browse our shop section for details.';
+    if(msg.includes('tips') || msg.includes('care')) return 'Visit our Pet Care Tips section for expert advice and videos.';
+    if(msg.includes('cart')) return 'Click the cart icon in the navbar to view your added items.';
+    if(msg.includes('contact')) return 'You can reach us at info@pawsandwhiskers.com or call (555) 123-4567.';
+    if(msg.includes('hello') || msg.includes('hi')) return 'Hello! How can I assist you with your pet needs today?';
+    if(msg.includes('price') || msg.includes('cost')) return 'All prices are listed in Indian Rupees. Let me know which product you want details for!';
+    return 'Sorry, I did not understand. Please ask about our products, services, or pet care!';
+  }
+</script>
   <section class="products" id="shop">
     <div class="product-card">
       <img src="product1.webp" alt="Natural Dog Food" />
