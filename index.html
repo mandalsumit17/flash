@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -428,13 +427,25 @@
     }
 
     // Direct pet type queries (fix: always respond with relevant info)
-    if(msg.trim() === 'dog' || msg.trim() === 'Dog') return 'For dogs, we offer food (dry, wet, treats), toys, grooming products, beds, and accessories. Would you like recommendations or details on a specific item?';
-    if(msg.trim() === 'cat' || msg.trim() === 'Cat') return 'For cats, we have premium food, litter, toys, scratching posts, and accessories. Need help choosing a product or want care tips?';
-    if(msg.trim() === 'bird' || msg.trim() === 'Bird') return 'For birds, we stock food, cages, toys, and health products. What type of bird do you have, or do you need advice on care?';
-    if(msg.trim() === 'rabbit' || msg.trim() === 'Rabbit') return 'For rabbits, we offer food, bedding, toys, and grooming supplies. Would you like feeding advice or product recommendations?';
-    if(msg.trim() === 'hamster' || msg.trim() === 'Hamster') return 'For hamsters, we have food, cages, bedding, and toys. Need help with care or choosing products?';
-    if(msg.trim() === 'guinea pig' || msg.trim() === 'Guinea Pig') return 'For guinea pigs, we offer food, bedding, cages, and toys. Would you like tips on care or product suggestions?';
-    if(msg.trim() === 'other' || msg.trim() === 'Other') return 'Tell me about your pet, and I’ll help you find the right products and advice!';
+    if(msg.trim().toLowerCase() === 'dog') return 'For dogs, we offer food (dry, wet, treats), toys, grooming products, beds, and accessories. Would you like recommendations or details on a specific item?';
+    if(msg.trim().toLowerCase() === 'cat') return 'For cats, we have premium food, litter, toys, scratching posts, and accessories. Need help choosing a product or want care tips?';
+    if(msg.trim().toLowerCase() === 'bird') return 'For birds, we stock food, cages, toys, and health products. What type of bird do you have? (Parrot, Budgie, Finch, Other)';
+    if(msg.trim().toLowerCase() === 'parrot') return 'For parrots, we offer specialized food, large cages, toys, and health supplements. Would you like tips on parrot care or product recommendations?';
+    if(msg.trim().toLowerCase() === 'budgie') return 'For budgies, we have seed mixes, small cages, toys, and care guides. Need advice on budgie health or feeding?';
+    if(msg.trim().toLowerCase() === 'finch') return 'For finches, we offer food, cages, and accessories. Would you like tips on keeping finches healthy and happy?';
+    if(msg.trim().toLowerCase() === 'rabbit') return 'For rabbits, we offer food, bedding, toys, and grooming supplies. Would you like feeding advice or product recommendations?';
+    if(msg.trim().toLowerCase() === 'hamster') return 'For hamsters, we have food, cages, bedding, and toys. Need help with care or choosing products?';
+    if(msg.trim().toLowerCase() === 'guinea pig') return 'For guinea pigs, we offer food, bedding, cages, and toys. Would you like tips on care or product suggestions?';
+    if(msg.trim().toLowerCase() === 'other') return 'Tell me about your pet, and I’ll help you find the right products and advice!';
+
+    if(msg.includes('appointment') || msg.includes('book a visit') || msg.includes('book appointment')) return 'Would you like to book an appointment for grooming, clinic, or another service? Please specify which service and your preferred date/time.';
+    if(msg.includes('clinic') || msg.includes('vet')) return 'Our veterinary clinic provides checkups, vaccinations, and emergency care. Would you like to book a visit, ask about a specific health concern, or know our clinic hours/location?';
+    if(msg.includes('event')) return 'We host pet events like training workshops and adoption drives. Would you like to see upcoming events, register, or know where the event is happening? Our events are usually held at our store or local parks. Ask for details on a specific event.';
+
+    // Fallback for pet-related queries not matched above
+    if(msg.match(/pet|dog|cat|bird|rabbit|hamster|guinea pig|parrot|budgie|finch/i)) {
+      return 'I’m here to help with any pet-related questions! Please ask about products, services, care tips, appointments, or anything else you need for your pet.';
+    }
 
     // High-level questions
     if(msg.includes('services')) return 'We offer grooming, veterinary clinic, adoption, and pet events. Which service are you interested in?';
