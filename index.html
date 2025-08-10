@@ -423,243 +423,44 @@
       if(msg.includes('bird')) return 'Sure! Are you shopping for bird food, cages, toys, or health products? What type of bird do you have?';
       if(msg.includes('rabbit')) return 'Of course! Are you looking for rabbit food, bedding, toys, or grooming supplies? Would you like advice on feeding or care?';
       if(msg.includes('hamster') || msg.includes('guinea pig') || msg.includes('small pet')) return 'Great! Are you interested in food, cages, bedding, or toys for your small pet? Which pet do you have: hamster, guinea pig, or another?';
-      return 'What type of pet do you have? (Dog, Cat, Bird, Rabbit, Hamster, Guinea Pig, Other) Select a pet type to see relevant products and advice.';
     }
-
-    // Direct pet type queries (fix: always respond with relevant info)
-    if(msg.trim().toLowerCase() === 'dog') return 'For dogs, we offer food (dry, wet, treats), toys, grooming products, beds, and accessories. Would you like recommendations or details on a specific item?';
-    if(msg.trim().toLowerCase() === 'cat') return 'For cats, we have premium food, litter, toys, scratching posts, and accessories. Need help choosing a product or want care tips?';
-    if(msg.trim().toLowerCase() === 'bird') return 'For birds, we stock food, cages, toys, and health products. What type of bird do you have? (Parrot, Budgie, Finch, Other)';
-    if(msg.trim().toLowerCase() === 'parrot') return 'For parrots, we offer specialized food, large cages, toys, and health supplements. Would you like tips on parrot care or product recommendations?';
-    if(msg.trim().toLowerCase() === 'budgie') return 'For budgies, we have seed mixes, small cages, toys, and care guides. Need advice on budgie health or feeding?';
-    if(msg.trim().toLowerCase() === 'finch') return 'For finches, we offer food, cages, and accessories. Would you like tips on keeping finches healthy and happy?';
-    if(msg.trim().toLowerCase() === 'rabbit') return 'For rabbits, we offer food, bedding, toys, and grooming supplies. Would you like feeding advice or product recommendations?';
-    if(msg.trim().toLowerCase() === 'hamster') return 'For hamsters, we have food, cages, bedding, and toys. Need help with care or choosing products?';
-    if(msg.trim().toLowerCase() === 'guinea pig') return 'For guinea pigs, we offer food, bedding, cages, and toys. Would you like tips on care or product suggestions?';
-    if(msg.trim().toLowerCase() === 'other') return 'Tell me about your pet, and I’ll help you find the right products and advice!';
-
-    if(msg.includes('appointment') || msg.includes('book a visit') || msg.includes('book appointment')) return 'Would you like to book an appointment for grooming, clinic, or another service? Please specify which service and your preferred date/time.';
-    if(msg.includes('clinic') || msg.includes('vet')) return 'Our veterinary clinic provides checkups, vaccinations, and emergency care. Would you like to book a visit, ask about a specific health concern, or know our clinic hours/location?';
-    if(msg.includes('event')) return 'We host pet events like training workshops and adoption drives. Would you like to see upcoming events, register, or know where the event is happening? Our events are usually held at our store or local parks. Ask for details on a specific event.';
-
-    // Fallback for pet-related queries not matched above
-    if(msg.match(/pet|dog|cat|bird|rabbit|hamster|guinea pig|parrot|budgie|finch/i)) {
-      return 'I’m here to help with any pet-related questions! Please ask about products, services, care tips, appointments, or anything else you need for your pet.';
+    // Prices
+    if(msg.includes('price') || msg.includes('cost')) {
+      if(msg.includes('dog food')) return 'Our dog food prices range from $20 to $60 depending on the brand and type.';
+      if(msg.includes('cat food')) return 'Cat food prices vary from $15 to $50. We have options for all budgets.';
+      if(msg.includes('bird food')) return 'Bird food is priced between $10 and $30. It depends on the size and type of bird.';
+      if(msg.includes('rabbit food')) return 'Rabbit food costs around $10 to $25. We offer both fresh and packaged options.';
+      if(msg.includes('hamster food') || msg.includes('guinea pig food') || msg.includes('small pet food')) return 'Small pet food prices range from $5 to $20. It varies by brand and quantity.';
     }
-
-    // High-level questions
-    if(msg.includes('services')) return 'We offer grooming, veterinary clinic, adoption, and pet events. Which service are you interested in?';
-    if(msg.includes('grooming')) return 'Our grooming service includes baths, haircuts, nail trims, and more. Would you like to book an appointment or know about pricing?';
-    if(msg.includes('clinic') || msg.includes('vet')) return 'Our veterinary clinic provides checkups, vaccinations, and emergency care. Do you want to book a visit or ask about a specific health concern?';
-    if(msg.includes('adoption')) return 'We help match pets with loving families. Are you looking to adopt a dog, cat, or another pet? Would you like to know about the process or available pets?';
-    if(msg.includes('event')) return 'We host pet events like training workshops and adoption drives. Would you like to see upcoming events or register?';
-
-    // Low-level, specific questions
-    if(msg.includes('price') || msg.includes('cost')) return 'Prices vary by product and service. Please specify what you are interested in (e.g., dog food, grooming, clinic visit) for details.';
-    if(msg.includes('brand')) return 'We carry top brands like Royal Canin, Pedigree, Whiskas, and more. Ask about a specific brand or product for recommendations.';
-    if(msg.includes('delivery')) return 'We offer fast home delivery and in-store pickup. Would you like to know about delivery times or fees?';
-    if(msg.includes('return') || msg.includes('refund')) return 'You can return most products within 30 days. Would you like to start a return or know more about our policy?';
-    if(msg.includes('discount') || msg.includes('offer') || msg.includes('sale')) return 'We have ongoing discounts and special offers. Would you like to see current deals or get a coupon code?';
-    if(msg.includes('subscribe') || msg.includes('subscription')) return 'You can subscribe for regular deliveries of pet food and supplies. Would you like to set up a subscription or learn about benefits?';
-    if(msg.includes('care tip') || msg.includes('advice')) return 'We share pet care tips and advice in our Tips section. Would you like tips for a specific pet or topic?';
-    if(msg.includes('contact') || msg.includes('help')) return 'You can contact us via phone, email, or live chat. Would you like our contact details or help with something specific?';
-    if(msg.includes('location') || msg.includes('store')) return 'We are located at 123 Pet Lane, City Center. Would you like directions or store hours?';
-    if(msg.includes('appointment')) return 'Would you like to book an appointment for grooming, clinic, or another service? Please specify.';
-    if(msg.includes('payment')) return 'We accept credit/debit cards, UPI, and cash. Would you like help with payment options or checkout?';
-    if(msg.includes('recommend') || msg.includes('suggest')) return 'Tell me about your pet and needs, and I can recommend products or services!';
-    if(msg.includes('brand')) return 'We carry top brands like Pedigree, Whiskas, Royal Canin, Drools, and more.';
-    if(msg.includes('organic') || msg.includes('natural')) return 'Yes, we have organic and natural pet products. Please specify your pet type.';
-    if(msg.includes('price') || msg.includes('cost')) return 'All prices are listed in Indian Rupees. Let me know which product or service you want details for!';
-    if(msg.includes('stock') || msg.includes('in stock')) return 'Please specify the product you are looking for, and I will check its availability.';
-    if(msg.includes('return') || msg.includes('exchange')) return 'You can return or exchange products within 7 days of purchase. See our policy for details.';
-    if(msg.includes('toy') || msg.includes('accessory') || msg.includes('bed')) return 'We have a variety of toys, accessories, and beds for all pets. Browse our Shop section for options.';
-    if(msg.includes('puppy') || msg.includes('kitten')) return 'We have special food and products for puppies and kittens. Ask for recommendations!';
-    if(msg.includes('rabbit') || msg.includes('hamster') || msg.includes('fish')) return 'Yes, we have products for rabbits, hamsters, and fish.';
-    if(msg.includes('allergy')) return 'We offer allergy-friendly products. Please specify your pet’s needs.';
-    // Grooming
-    if(msg.includes('groom') || msg.includes('grooming')) return 'We offer professional grooming for dogs, cats, and small pets. Services include bath, haircut, nail trim, ear cleaning, and more. You can book an appointment or walk in. Would you like to know timings or prices?';
-    if(msg.includes('grooming price') || msg.includes('grooming cost')) return 'Grooming prices start at ₹499. Please specify your pet type for a detailed quote.';
-    if(msg.includes('grooming timing') || msg.includes('grooming time') || msg.includes('grooming hours')) return 'Grooming is available from 10am to 7pm, Monday to Saturday.';
-    if(msg.includes('nail') || msg.includes('ear')) return 'Yes, we offer nail trimming and ear cleaning as part of our grooming services.';
-    if(msg.includes('walk-in grooming')) return 'Walk-in grooming is available, but booking is recommended for faster service.';
-    if(msg.includes('groomer certified')) return 'Our groomers are certified and experienced.';
-    // Clinic
-    if(msg.includes('clinic') || msg.includes('vet') || msg.includes('doctor')) return 'Our pet clinic provides checkups, vaccinations, and health consultations. Would you like to book a visit or know doctor availability?';
-    if(msg.includes('doctor available') || msg.includes('doctor availability') || msg.includes('vet available')) return 'Our veterinarians are available from 11am to 6pm, Monday to Saturday. Emergency services are available on call.';
-    if(msg.includes('book doctor') || msg.includes('book clinic') || msg.includes('appointment')) return 'You can book a clinic appointment by calling us or visiting the Pet Clinic section. Would you like to book now?';
-    if(msg.includes('vaccination')) return 'We offer vaccinations for all pets. Please book an appointment for your pet.';
-    if(msg.includes('health checkup')) return 'Health checkups are available for all pets. Book a slot or walk in during clinic hours.';
-    if(msg.includes('emergency')) return 'Emergency services are available. Call us immediately for urgent care.';
-    if(msg.includes('dental')) return 'We offer dental care for pets. Ask for details or book a dental checkup.';
-    // Adoption
-    if(msg.includes('adopt') || msg.includes('adoption')) return 'We help connect loving families with pets in need of homes. Available breeds include Labradors, Beagles, Indies, Persians, and more. Would you like to know about a specific breed, see all available pets, or start the adoption process?';
-    if(msg.includes('breed') || msg.includes('breeds')) return 'We have a variety of breeds for adoption, including Labradors, Beagles, Indies, Persians, and more. Please specify if you are looking for a dog, cat, or other pet.';
-    if(msg.includes('adoption process') || msg.includes('how to adopt')) return 'To adopt, visit our Adoption section, choose a pet, and fill out the application form. Our team will guide you through the next steps.';
-    if(msg.includes('adoption fee')) return 'Adoption fees vary by pet. Please ask about a specific pet for details.';
-    if(msg.includes('adopt puppy') || msg.includes('adopt kitten') || msg.includes('adopt adult')) return 'We have puppies, kittens, and adult pets available for adoption.';
-    if(msg.includes('visit pet') || msg.includes('see pet')) return 'You can visit our store to meet pets available for adoption.';
-    if(msg.includes('post-adoption')) return 'We offer post-adoption support and guidance.';
-    // Events
-    if(msg.includes('event') || msg.includes('events')) return 'We host pet events like training workshops, meetups, and fun competitions. Would you like to know about upcoming events or register?';
-    if(msg.includes('upcoming event') || msg.includes('next event')) return 'Our next event is a Pet Training Workshop on 20th August. Register now to reserve your spot!';
-    if(msg.includes('register event') || msg.includes('join event')) return 'You can register for events through our Pet Events section or by contacting us directly.';
-    if(msg.includes('competition') || msg.includes('meetup')) return 'We host competitions and meetups for pet lovers. Check our Events section for details.';
-    // Pet Care Tips
-    if(msg.includes('tips') || msg.includes('care')) return 'Visit our Pet Care Tips section for expert advice and videos.';
-    if(msg.includes('feed') || msg.includes('feeding')) return 'Feed your pet a balanced diet for optimal health. Ask for recommendations for your pet.';
-    if(msg.includes('vaccination schedule')) return 'Vaccination schedules depend on your pet’s age and type. Ask our clinic for a personalized schedule.';
-    if(msg.includes('train') || msg.includes('training')) return 'We offer training tips and workshops. Ask about upcoming training events.';
-    if(msg.includes('toy recommend') || msg.includes('recommend toy')) return 'We recommend interactive toys for mental stimulation and exercise.';
-    if(msg.includes('allergy')) return 'We offer advice and products for pets with allergies.';
-    if(msg.includes('pet sick') || msg.includes('sick')) return 'If your pet is sick, please visit our clinic or call us for urgent care.';
-    if(msg.includes('video') || msg.includes('article')) return 'Check our Pet Care Tips section for videos and articles.';
-    // Cart & Shopping
-    if(msg.includes('cart')) return 'Click the cart icon in the navbar to view your added items.';
-    if(msg.includes('checkout')) return 'Go to your cart and click checkout to complete your purchase.';
-    if(msg.includes('edit cart')) return 'You can edit your cart before checkout.';
-    if(msg.includes('discount code')) return 'Apply your discount code at checkout.';
-    if(msg.includes('secure payment')) return 'All payments are secure and encrypted.';
-    if(msg.includes('track order')) return 'You can track your order after checkout. We will send you updates.';
-    // Miscellaneous
-    if(msg.includes('gift card')) return 'We offer gift cards for pet lovers. Ask for details.';
-    if(msg.includes('volunteer')) return 'You can volunteer at our store or events. Contact us for opportunities.';
-    if(msg.includes('loyalty')) return 'Join our loyalty program for exclusive rewards.';
-    if(msg.includes('donate')) return 'You can donate to animal welfare through our store.';
-    if(msg.includes('insurance')) return 'We offer pet insurance plans. Ask for details.';
-    if(msg.includes('boarding') || msg.includes('daycare')) return 'We offer pet boarding and daycare services.';
-    if(msg.includes('recommend')) return 'Let us know your pet’s needs and we’ll recommend the best products or services.';
-    // Greetings & fallback
-    if(msg.includes('hello') || msg.includes('hi')) return 'Hello! How can I assist you with your pet needs today?';
-    return 'Sorry, I did not understand. Please ask about our products, services, adoption, grooming, clinic, events, or pet care!';
+    // Shipping
+    if(msg.includes('shipping') || msg.includes('deliver') || msg.includes('post')) {
+      return 'We offer free shipping on orders over $50. Otherwise, standard shipping rates apply.';
+    }
+    // Returns
+    if(msg.includes('return') || msg.includes('refund') || msg.includes('exchange')) {
+      return 'You can return any unopened and unused products within 30 days for a full refund or exchange.';
+    }
+    // Appointments
+    if(msg.includes('appointment') || msg.includes('book') || msg.includes('schedule')) {
+      return 'To book an appointment for grooming or veterinary services, please call us at (555) 123-4567 or visit our website.';
+    }
+    // Payments
+    if(msg.includes('pay') || msg.includes('payment methods') || msg.includes('credit card') || msg.includes('debit card')) {
+      return 'We accept all major credit and debit cards, as well as PayPal and Apple Pay.';
+    }
+    // Misc
+    if(msg.includes('loyalty') || msg.includes('member') || msg.includes('discount card')) {
+      return 'Join our loyalty program to earn points and get discounts on future purchases. Ask in-store for details.';
+    }
+    if(msg.includes('gift') || msg.includes('voucher') || msg.includes('certificate')) {
+      return 'We offer gift vouchers that can be redeemed in-store or online. Perfect for pet lovers!';
+    }
+    return 'I\'m sorry, I didn\'t quite understand that. Can you please rephrase or provide more details?';
+  }
+  // Menu toggle for mobile
+  function toggleMenu() {
+    const menu = document.getElementById('navbar-menu');
+    menu.classList.toggle('active');
   }
 </script>
-  <section class="products" id="shop">
-    <div class="product-card">
-      <img src="product1.webp" alt="Natural Dog Food" />
-      <h3>Natural Dog Food</h3>
-      <p>Wholesome nutrition for all breeds. Grain-free, high protein.</p>
-      <div class="product-price">₹799</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product2.webp" alt="Premium Cat Food" />
-      <h3>Premium Cat Food</h3>
-      <p>Delicious recipes for healthy coats and happy cats.</p>
-      <div class="product-price">₹599</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product4.webp" alt="Organic Rabbit Food" />
-      <h3>Organic Rabbit Food</h3>
-      <p>Fresh, natural ingredients for energetic bunnies.</p>
-      <div class="product-price">₹399</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product5.webp" alt="Cozy Pet Bed" />
-      <h3>Cozy Pet Bed</h3>
-      <p>Soft, durable, and machine-washable for ultimate comfort.</p>
-      <div class="product-price">₹999</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product6.jpg" alt="Interactive Toy" />
-      <h3>Interactive Toy</h3>
-      <p>Keep your pets active and entertained for hours.</p>
-      <div class="product-price">₹249</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product8.jpg" alt="Dog Chew Bone" />
-      <h3>Dog Chew Bone</h3>
-      <p>Long-lasting chew for strong teeth and healthy gums.</p>
-      <div class="product-price">₹199</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product9.webp" alt="Cat Scratcher" />
-      <h3>Cat Scratcher</h3>
-      <p>Durable scratcher for playful and healthy cats.</p>
-      <div class="product-price">₹349</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="product3.jpg" alt="Bird Feeder" />
-      <h3>Bird Feeder</h3>
-      <p>Easy-to-use feeder for all types of pet birds.</p>
-      <div class="product-price">₹299</div>
-      <button class="product-btn" style="margin-top:1rem; width:100%;" onclick="addToCart()">Add to Cart</button>
-    </div>
-  </section>
-
-  <!-- Pet Care Tips Section -->
-  <section class="tips-section" id="tips">
-    <div class="tips-title">Pet Care Tips</div>
-    <div class="tip" id="tip-text">Feed your pet a balanced diet for optimal health.</div>
-    <a class="tip-link" id="tip-link" href="https://www.youtube.com/watch?v=1Ne1hqOXKKI" target="_blank">Watch on YouTube</a>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer" id="contact">
-    <div class="footer-links">
-      <a href="#home">Home</a>
-      <a href="#shop">Shop</a>
-      <a href="#about">About</a>
-      <a href="#tips">Pet Care Tips</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <div class="footer-contact">
-      Email: info@pawsandwhiskers.com | Phone: (555) 123-4567
-    </div>
-    <div class="footer-copy">
-      &copy; 2025 Paws and Whiskers. All rights reserved.
-    </div>
-  </footer>
-
-  <script>
-    // Responsive Navbar Toggle
-    function toggleMenu() {
-      document.getElementById('navbar-menu').classList.toggle('active');
-    }
-
-    // Simple Cart Logic
-    let cartCount = 0;
-    function addToCart() {
-      cartCount++;
-      document.getElementById('cart-count').textContent = cartCount;
-    }
-
-    // Rotating Pet Care Tips
-    const tips = [
-      {
-        text: "Feed your pet a balanced diet for optimal health.",
-        link: "https://www.youtube.com/watch?v=1Ne1hqOXKKI"
-      },
-      {
-        text: "Regular grooming keeps your pet's coat shiny and healthy.",
-        link: "https://www.youtube.com/watch?v=JQ9QF9AWj6g"
-      },
-      {
-        text: "Exercise your pet daily to maintain a healthy weight.",
-        link: "https://www.youtube.com/watch?v=5bYv6l1zGqA"
-      },
-      {
-        text: "Provide fresh water at all times for hydration.",
-        link: "https://www.youtube.com/watch?v=QwQpGzKjFqA"
-      },
-      {
-        text: "Schedule regular vet checkups for preventive care.",
-        link: "https://www.youtube.com/watch?v=3Q8zTVlD7yY"
-      }
-    ];
-    let tipIndex = 0;
-    function showTip() {
-      document.getElementById('tip-text').textContent = tips[tipIndex].text;
-      document.getElementById('tip-link').href = tips[tipIndex].link;
-      tipIndex = (tipIndex + 1) % tips.length;
-    }
-    setInterval(showTip, 10000);
-    window.addEventListener('DOMContentLoaded', showTip);
-  </script>
-</body>
 </html>
